@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/iv_logo"
-        android:layout_width="260dp"
-        android:layout_height="180dp"
+        android:layout_width="@dimen/app_logo_width"
+        android:layout_height="@dimen/app_logo_height"
         android:src="@mipmap/splash_logo"
         android:scaleType="fitXY"
         android:layout_centerInParent="true"
@@ -21,23 +21,23 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-20dp"
+        android:layout_marginTop="@dimen/title_container_margin_top"
         android:orientation="horizontal">
 
         <com.innovative.crownkart.views.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:font="OpenSans-Semibold.ttf"
+            app:font="@string/semibold_sans"
             android:text="@string/app_crown_title"
-            android:textSize="44sp"
+            android:textSize="@dimen/app_crown_textsize"
             android:textColor="#3AB0E1" />
 
         <com.innovative.crownkart.views.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:font="OpenSans-Semibold.ttf"
+            app:font="string/semibold_sans"
             android:text="@string/app_kart_title"
-            android:textSize="52sp"
+            android:textSize="@dimen/app_kart_textsize"
             android:textColor="#FF0"/>
 
     </LinearLayout>
@@ -48,9 +48,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        app:font="Glegoo-Regular.ttf"
+        app:font="@string/regular_glegoo"
         android:text="F o r    F a s h i o n   L o v e r s"
-        android:textSize="24sp"
-        android:textColor="#000"
+        android:textSize="@dimen/fashion_title_textsize"
+        android:textColor="@color/black"
         android:layout_marginTop="6dp"/>
 </RelativeLayout>
