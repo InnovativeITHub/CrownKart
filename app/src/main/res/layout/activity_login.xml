@@ -81,7 +81,7 @@
                 android:padding="12dp"
                 android:layout_marginTop="8dp">
 
-                <EditText
+                <com.innovative.crownkart.views.CustomEditText
                     android:id="@+id/et_email_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
                     android:imeOptions="actionNext"
                     android:maxLines="1" />
 
-                <EditText
+                <com.innovative.crownkart.views.CustomEditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
