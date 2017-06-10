@@ -6,6 +6,9 @@
     ================================================================================================
     -->
     <string name="app_name">CrownKart</string>
+    <string name="crown_name">Crown</string>
+    <string name="kart_name">Kart</string>
+    <string name="fields_empty">Fields Can\'t be empty</string>
 
     <!--
     ================================================================================================
@@ -29,17 +32,26 @@
 
     <!--
     ================================================================================================
+    Register Activity String
+    ================================================================================================
+    -->
+    <string name="register_username">Username</string>
+    <string name="register_mobile_number">Mobile Number</string>
+    <string name="register_email">Email address</string>
+    <string name="register_password">Password</string>
+    <string name="register_mobile_error">Mobile number can\'t be less than 10 digits</string>
+
+    <!--
+    ================================================================================================
     Login Activity String
     ================================================================================================
     -->
-    <string name="email">CrownKart</string>
-    <string name="password">CrownKart</string>
-    <string name="name">CrownKart</string>
-    <string name="email_empty">CrownKart</string>
-    <string name="password_empty">CrownKart</string>
-    <string name="name_empty">CrownKart</string>
-    <string name="error_empty">CrownKart</string>
-    <string name="mobile">CrownKart</string>
-    <string name="mobile_error">mobile number can not be less than 10 digits</string>
+    <string name="login_email">Email address</string>
+    <string name="login_password">Password</string>
+    <string name="error_password">Password</string>
+    <string name="register_send_email">Please </string>
+    <string name="register_name_empty">CrownKart</string>
+    <string name="register_error_empty">CrownKart</string>
+    <string name="register_mobile">CrownKart</string>
 
 </resources>
