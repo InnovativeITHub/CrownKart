@@ -1,3 +1,45 @@
 <resources>
+
+    <!--
+    ================================================================================================
+    App Level String
+    ================================================================================================
+    -->
     <string name="app_name">CrownKart</string>
+
+    <!--
+    ================================================================================================
+    Font String
+    ================================================================================================
+    -->
+    <string name="regular_sans">OpenSans-Regular.ttf</string>
+    <string name="semibold_sans">OpenSans-Semibold.ttf</string>
+    <string name="bold_sans">OpenSans-Bold.ttf</string>
+    <string name="regular_glegoo">Glegoo-Regular.ttf</string>
+    <string name="bold_glegoo">Glegoo-Bold.ttf</string>
+
+    <!--
+    ================================================================================================
+    Splash Level String
+    ================================================================================================
+    -->
+    <string name="app_crown_title">Crown</string>
+    <string name="app_kart_title">Kart</string>
+    <string name="fashion_title">F o r   F a s h i o n   L o v e r s</string>
+
+    <!--
+    ================================================================================================
+    Login Activity String
+    ================================================================================================
+    -->
+    <string name="email">CrownKart</string>
+    <string name="password">CrownKart</string>
+    <string name="name">CrownKart</string>
+    <string name="email_empty">CrownKart</string>
+    <string name="password_empty">CrownKart</string>
+    <string name="name_empty">CrownKart</string>
+    <string name="error_empty">CrownKart</string>
+    <string name="mobile">CrownKart</string>
+    <string name="mobile_error">mobile number can not be less than 10 digits</string>
+
 </resources>

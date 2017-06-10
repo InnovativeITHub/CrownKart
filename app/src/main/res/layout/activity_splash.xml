@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/splash_background">
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="260dp"
+        android:layout_height="180dp"
+        android:src="@mipmap/splash_logo"
+        android:scaleType="fitXY"
+        android:layout_centerInParent="true"
+        android:contentDescription="@null"/>
+
+    <LinearLayout
+        android:id="@+id/title_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-20dp"
+        android:orientation="horizontal">
+
+        <com.innovative.crownkart.views.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:font="OpenSans-Semibold.ttf"
+            android:text="@string/app_crown_title"
+            android:textSize="44sp"
+            android:textColor="#3AB0E1" />
+
+        <com.innovative.crownkart.views.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:font="OpenSans-Semibold.ttf"
+            android:text="@string/app_kart_title"
+            android:textSize="52sp"
+            android:textColor="#FF0"/>
+
+    </LinearLayout>
+
+
+    <com.innovative.crownkart.views.CustomTextView
+        android:layout_below="@+id/title_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        app:font="Glegoo-Regular.ttf"
+        android:text="F o r    F a s h i o n   L o v e r s"
+        android:textSize="24sp"
+        android:textColor="#000"
+        android:layout_marginTop="6dp"/>
+</RelativeLayout>
