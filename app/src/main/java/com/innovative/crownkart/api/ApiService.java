@@ -23,4 +23,9 @@ public interface ApiService {
     @POST("login.php")
     Call<Map> loginUser(@Field("email") String emailAddress,
                         @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("productDetails.php")
+    Call<Map> getSpecificProduct(@Field("product_id") String productId);
+
 }

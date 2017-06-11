@@ -72,6 +72,8 @@ public class LoginActivity extends AppCompatActivity {
                 public void onSuccess(Map map) {
                     LinkedTreeMap treeMap=((LinkedTreeMap)((LinkedTreeMap)map.get("response")).get("result"));
                     SnackbarUtil.showLongSnackbar(LoginActivity.this, treeMap.get("msg").toString());
+
+                    startActivity(new Intent(App.getAppContext(), DashboardActivity.class));
                 }
 
                 @Override
@@ -84,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_skip)
     public void onClickSkip() {
-
+        startActivity(new Intent(App.getAppContext(), DashboardActivity.class));
     }
 
     @OnClick(R.id.btn_signup)
