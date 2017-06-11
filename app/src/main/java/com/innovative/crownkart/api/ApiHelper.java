@@ -1,6 +1,16 @@
 package com.innovative.crownkart.api;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.innovative.crownkart.config.App;
+
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Pulkit on 10-Jun-17.
@@ -9,12 +19,14 @@ import com.innovative.crownkart.config.App;
 public class ApiHelper {
     private static App app;
     private static ApiHelper apiHelper;
+    private ApiService apiService;
 
-    private ApiHelper(){}
+    private ApiHelper() {
+    }
 
-    public static ApiHelper init(App app){
-        if(apiHelper==null){
-            apiHelper=new ApiHelper();
+    public static ApiHelper init(App app) {
+        if (apiHelper == null) {
+            apiHelper = new ApiHelper();
             apiHelper.initApiService();
             setApp(app);
         }
@@ -26,6 +38,40 @@ public class ApiHelper {
     }
 
     private void initApiService() {
+        Gson gson = new GsonBuilder().serializeNulls().create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://crownkart.com/crownKart/api/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
 
+        apiService = retrofit.create(ApiService.class);
+    }
+
+    public void registerUser(String username, String mobile, String emailAddress, String password, final ApiCallback<Map> apiCallback) {
+        apiService.registerUser(username, mobile, emailAddress, password).enqueue(new Callback<Map>() {
+            @Override
+            public void onResponse(Call<Map> call, Response<Map> response) {
+                apiCallback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Map> call, Throwable t) {
+                apiCallback.onFailure("unable to parse data from server");
+            }
+        });
+    }
+
+    public void loginUser(String emailAddress, String password, final ApiCallback<Map> apiCallback) {
+        apiService.loginUser(emailAddress, password).enqueue(new Callback<Map>() {
+            @Override
+            public void onResponse(Call<Map> call, Response<Map> response) {
+                apiCallback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Map> call, Throwable t) {
+                apiCallback.onFailure("unable to parse data from server");
+            }
+        });
     }
 }
