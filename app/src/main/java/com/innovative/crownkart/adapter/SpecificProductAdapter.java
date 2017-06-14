@@ -2,6 +2,8 @@ package com.innovative.crownkart.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +13,14 @@ import android.widget.Toast;
 
 import com.google.gson.internal.LinkedTreeMap;
 import com.innovative.crownkart.R;
+import com.innovative.crownkart.config.App;
 import com.innovative.crownkart.views.CustomTextView;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -23,11 +28,9 @@ import butterknife.ButterKnife;
  */
 
 public class SpecificProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private Activity activity;
     private ArrayList<LinkedTreeMap> productDetailList;
 
-    public SpecificProductAdapter(Activity activity, ArrayList<LinkedTreeMap> productDetailList) {
-        this.activity = activity;
+    public SpecificProductAdapter(ArrayList<LinkedTreeMap> productDetailList) {
         this.productDetailList = productDetailList;
     }
 
@@ -38,14 +41,13 @@ public class SpecificProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        //Toast.makeText(activity, productDetailList.size()+"", Toast.LENGTH_SHORT).show();
-        LinkedTreeMap linkedTreeMap=productDetailList.get(position);
+        final LinkedTreeMap linkedTreeMap = productDetailList.get(position);
 
-        SpecificProductHolder holder= (SpecificProductHolder) viewHolder;
+        final SpecificProductHolder holder = (SpecificProductHolder) viewHolder;
         holder.tvCatName.setText(linkedTreeMap.get("category").toString());
         holder.tvProductDescription.setText(linkedTreeMap.get("product_description").toString());
-
-        Picasso.with(activity).load(linkedTreeMap.get("product_images").toString()).centerCrop().fit().into(holder.ivProductImage);
+        holder.tvPrice.setText(linkedTreeMap.get("price").toString());
+        Picasso.with(App.getAppContext()).load("http://crownkart.com/crownKart/admin/" + linkedTreeMap.get("product_images").toString()).error(R.mipmap.tshirt).into(holder.ivProductImage);
     }
 
     @Override
@@ -53,20 +55,23 @@ public class SpecificProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         return productDetailList.size();
     }
 
-    private class SpecificProductHolder extends RecyclerView.ViewHolder{
+    class SpecificProductHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.iv_product_image)
         ImageView ivProductImage;
-        com.innovative.crownkart.views.CustomTextView tvCatName, tvProductDescription;
+        @BindView(R.id.tv_cat_name)
+        CustomTextView tvCatName;
+        @BindView(R.id.tv_product_description)
+        CustomTextView tvProductDescription;
+        @BindView(R.id.tv_price)
+        CustomTextView tvPrice;
 
         public SpecificProductHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
 
-            ivProductImage= (ImageView) itemView.findViewById(R.id.iv_product_image);
-            tvCatName= (CustomTextView) itemView.findViewById(R.id.tv_cat_name);
-            tvProductDescription= (CustomTextView) itemView.findViewById(R.id.tv_product_description);
-
-            /*ivProductImage= ButterKnife.findById(activity, R.id.iv_product_image);
-            tvCatName=ButterKnife.findById(activity, R.id.tv_cat_name);
-            tvProductDescription=ButterKnife.findById(activity, R.id.tv_product_description);*/
+            /*ivProductImage = ButterKnife.findById(activity, R.id.iv_product_image);
+            tvCatName = ButterKnife.findById(activity, R.id.tv_cat_name);
+            tvProductDescription = ButterKnife.findById(activity, R.id.tv_product_description);*/
         }
     }
 }

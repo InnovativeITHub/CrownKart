@@ -28,4 +28,7 @@ public interface ApiService {
     @POST("productDetails.php")
     Call<Map> getSpecificProduct(@Field("product_id") String productId);
 
+    @POST("categoryProduct.php")
+    Call<Map> getDrawerItems();
+
 }

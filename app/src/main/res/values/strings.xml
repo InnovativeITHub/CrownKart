@@ -54,4 +54,9 @@
     <string name="register_error_empty">CrownKart</string>
     <string name="register_mobile">CrownKart</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+
 </resources>
