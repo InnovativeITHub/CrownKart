@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.innovative.crownkart.config.App;
 
+import org.json.JSONObject;
+
 import java.util.Map;
 
 import retrofit2.Call;
@@ -43,7 +45,9 @@ public class ApiHelper {
                 .baseUrl("http://crownkart.com/crownKart/api/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-
+        //http://crownkart.com/crownKart/api/
+        //http://microblogging.wingnity.com/JSONParsingTutorial/jsonActors
+        //http://lifebeat.16mb.com/
         apiService = retrofit.create(ApiService.class);
     }
 
@@ -75,7 +79,7 @@ public class ApiHelper {
         });
     }
 
-    public void getSpecificProduct(String productId, final ApiCallback<Map> apiCallback){
+    public void getSpecificProduct(String productId, final ApiCallback<Map> apiCallback) {
         apiService.getSpecificProduct(productId).enqueue(new Callback<Map>() {
             @Override
             public void onResponse(Call<Map> call, Response<Map> response) {
@@ -89,7 +93,7 @@ public class ApiHelper {
         });
     }
 
-    public  void getDrawerItem(final ApiCallback<Map> apiCallback){
+    public void getDrawerItem(final ApiCallback<Map> apiCallback) {
         apiService.getDrawerItems().enqueue(new Callback<Map>() {
             @Override
             public void onResponse(Call<Map> call, Response<Map> response) {

@@ -44,10 +44,14 @@ public class SpecificProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         final LinkedTreeMap linkedTreeMap = productDetailList.get(position);
 
         final SpecificProductHolder holder = (SpecificProductHolder) viewHolder;
-        holder.tvCatName.setText(linkedTreeMap.get("category").toString());
-        holder.tvProductDescription.setText(linkedTreeMap.get("product_description").toString());
-        holder.tvPrice.setText(linkedTreeMap.get("price").toString());
-        Picasso.with(App.getAppContext()).load("http://crownkart.com/crownKart/admin/" + linkedTreeMap.get("product_images").toString()).error(R.mipmap.tshirt).into(holder.ivProductImage);
+        if (linkedTreeMap.get("category") != null)
+            holder.tvCatName.setText(linkedTreeMap.get("category").toString());
+        if (linkedTreeMap.get("product_description") != null)
+            holder.tvProductDescription.setText(linkedTreeMap.get("product_description").toString());
+        if (linkedTreeMap.get("price") != null)
+            holder.tvPrice.setText(linkedTreeMap.get("price").toString());
+        if (linkedTreeMap.get("product_images") != null)
+            Picasso.with(App.getAppContext()).load("http://crownkart.com/crownKart/admin/" + linkedTreeMap.get("product_images").toString()).error(R.mipmap.tshirt).into(holder.ivProductImage);
     }
 
     @Override

@@ -24,6 +24,7 @@ import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
 import com.google.gson.internal.LinkedTreeMap;
 import com.innovative.crownkart.R;
 import com.innovative.crownkart.adapter.ExpandableListAdapter;
@@ -32,6 +33,10 @@ import com.innovative.crownkart.api.ApiCallback;
 import com.innovative.crownkart.config.App;
 import com.innovative.crownkart.fragments.CategoryFragment;
 import com.innovative.crownkart.fragments.DashboardDrawerFragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +48,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class DashboardActivity extends AppCompatActivity implements DashboardDrawerFragment.NavigationDrawerCallbacks{
+public class DashboardActivity extends AppCompatActivity implements DashboardDrawerFragment.NavigationDrawerCallbacks {
     @BindView(R.id.main_layout)
     DrawerLayout mDrawerLayout;
     @BindView(R.id.toolbar)
@@ -54,13 +59,14 @@ public class DashboardActivity extends AppCompatActivity implements DashboardDra
     private DashboardDrawerFragment dashboardDrawerFragment;
     private CharSequence mTitle;
     static FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
         ButterKnife.bind(this);
-        fragmentManager=getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         setupToolbar();
         initDrawerFragment();
         initMainFragment();
@@ -77,7 +83,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardDra
         mTitle = getTitle();
         dashboardDrawerFragment.setUp(R.id.navigation_drawer, mDrawerLayout);*/
 
-        Demo demo= (Demo) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        Demo demo = (Demo) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         demo.setUp(R.id.navigation_drawer, mDrawerLayout);
     }
 
@@ -89,10 +95,10 @@ public class DashboardActivity extends AppCompatActivity implements DashboardDra
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        Toast.makeText(this, position+"", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, position + "", Toast.LENGTH_SHORT).show();
     }
 
-    public static class Demo extends Fragment{
+    public static class Demo extends Fragment {
         private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
         private DashboardDrawerFragment.NavigationDrawerCallbacks mCallbacks;
         private ActionBarDrawerToggle mDrawerToggle;
@@ -118,7 +124,9 @@ public class DashboardActivity extends AppCompatActivity implements DashboardDra
             super.onActivityCreated(savedInstanceState);
             setHasOptionsMenu(true);
         }
-        List<String> stringList=new ArrayList<>();
+
+        List<String> stringList;
+        HashMap<String, List<String>> hash = new HashMap<String, List<String>>();
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -126,24 +134,57 @@ public class DashboardActivity extends AppCompatActivity implements DashboardDra
 
             //Todo
             expandableListDetail = new HashMap<>();
+            SharedPreferences sharedPreferences = App.getAppContext().getSharedPreferences("crownkart", Context.MODE_PRIVATE);
+            String json = sharedPreferences.getString("crown", "hello");
 
-            App.getApiHelper().getDrawerItem(new ApiCallback<Map>() {
+            //LinkedHashMap<String, List<String>> expandableListDetails = new LinkedHashMap<String, List<String>>();
+            HashMap<String, List<String>> expandableListDetail = new HashMap<>();
+            List<String> list = new ArrayList<>();
+            List<String> list1 = new ArrayList<>();
+            try {
+                //new JSONArray(new JSONArray(sharedPreferences.getString("crown", "hello")).getJSONObject(0).get("subcategoryDTOList").toString()).getJSONObject(0).getString("has_product")
+                JSONArray parentArray = new JSONArray(json);
+                for (int i = 0; i < parentArray.length(); i++) {
+                    JSONObject jsonObject = parentArray.getJSONObject(i);
+                    jsonObject.getString("main_id");
+                    jsonObject.getString("main_category");
+                    JSONArray childArray = jsonObject.getJSONArray("subcategoryDTOList");
+                    for (int j = 0; i < childArray.length(); j++) {
+                        JSONObject childObject = childArray.getJSONObject(j);
+                        childObject.getString("has_product");
+
+                        list1.add(childObject.getString("has_product"));
+                        list1.add(childObject.getString("category_name"));
+                    }
+
+                    expandableListDetail.put("main_category", list1);
+                    list.add(jsonObject.getString("main_category"));
+
+                    mDrawerListView.setAdapter(new ExpandableListAdapter(getActivity(), expandableListTitle, expandableListDetail));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            /*App.getApiHelper().getDrawerItem(new ApiCallback<Map>() {
                 @Override
                 public void onSuccess(Map map) {
                     if (map != null) {
                         for (int i = 0; i < ((ArrayList) map.get("response")).size(); i++) {
+                            stringList=new ArrayList<String>();
                             List<String> list = new ArrayList<String>();
                             for (int j = 0; j < ((ArrayList) ((LinkedTreeMap) ((ArrayList) map.get("response")).get(i)).get("subcategory")).size(); j++) {
                                 stringList.add(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) map.get("response")).get(i)).get("subcategory")).get(j)).get("product_id").toString());
                                 list.add(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) map.get("response")).get(i)).get("subcategory")).get(j)).get("category_name").toString());
                             }
+                            hash.put(i + "", stringList);
                             expandableListDetail.put(((LinkedTreeMap) ((ArrayList) map.get("response")).get(i)).get("main_category").toString(), list);
 
                             expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-                            mDrawerListView.setAdapter(new ExpandableListAdapter(getActivity(), expandableListTitle, expandableListDetail,stringList));
-
-
                         }
+                        mDrawerListView.setAdapter(new ExpandableListAdapter(getActivity(), expandableListTitle, expandableListDetail, stringList));
+
                     }
                 }
 
@@ -151,7 +192,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardDra
                 public void onFailure(String message) {
 
                 }
-            });
+            });*/
             View header = inflater.inflate(R.layout.header_profile_drawer, null);
             mDrawerListView.addHeaderView(header);
 
@@ -190,9 +231,9 @@ public class DashboardActivity extends AppCompatActivity implements DashboardDra
 
                     mDrawerLayout.closeDrawers();
                     //Toast.makeText(App.getAppContext(), childPosition + "", Toast.LENGTH_SHORT).show();
-                    SharedPreferences preferences=App.getAppContext().getSharedPreferences("crown", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor=preferences.edit();
-                    editor.putString("product_id", stringList.get(childPosition));
+                    SharedPreferences preferences = App.getAppContext().getSharedPreferences("crown", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("product_id", hash.get(groupPosition + "").get(childPosition));
                     editor.commit();
 
                     initMainFragment();
@@ -270,6 +311,8 @@ public class DashboardActivity extends AppCompatActivity implements DashboardDra
         public void onConfigurationChanged(Configuration newConfig) {
             super.onConfigurationChanged(newConfig);
             mDrawerToggle.onConfigurationChanged(newConfig);
+
+
         }
 
         @Override
@@ -288,10 +331,11 @@ public class DashboardActivity extends AppCompatActivity implements DashboardDra
         }
 
         private LinkedHashMap<String, List<String>> expandableListDetails;
+
         public HashMap<String, List<String>> getData() {
             expandableListDetails = new LinkedHashMap<String, List<String>>();
 
-            App.getApiHelper().getDrawerItem(new ApiCallback<Map>() {
+            /*App.getApiHelper().getDrawerItem(new ApiCallback<Map>() {
                 @Override
                 public void onSuccess(Map map) {
                     if (map != null) {
@@ -309,7 +353,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardDra
                 public void onFailure(String message) {
 
                 }
-            });
+            });*/
 
             return expandableListDetails;
         /*LinkedHashMap<String, List<String>> expandableListDetail = new LinkedHashMap<String, List<String>>();

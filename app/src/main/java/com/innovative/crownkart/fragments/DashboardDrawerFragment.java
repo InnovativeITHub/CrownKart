@@ -69,7 +69,7 @@ public class DashboardDrawerFragment extends Fragment {
         //Todo
         expandableListDetail = new HashMap<>();
 
-        App.getApiHelper().getDrawerItem(new ApiCallback<Map>() {
+        /*App.getApiHelper().getDrawerItem(new ApiCallback<Map>() {
             @Override
             public void onSuccess(Map map) {
                 if (map != null) {
@@ -93,7 +93,7 @@ public class DashboardDrawerFragment extends Fragment {
             public void onFailure(String message) {
 
             }
-        });
+        });*/
         View header = inflater.inflate(R.layout.header_profile_drawer, null);
         mDrawerListView.addHeaderView(header);
 
@@ -233,7 +233,7 @@ public class DashboardDrawerFragment extends Fragment {
     public HashMap<String, List<String>> getData() {
         expandableListDetails = new LinkedHashMap<String, List<String>>();
 
-        App.getApiHelper().getDrawerItem(new ApiCallback<Map>() {
+        /*App.getApiHelper().getDrawerItem(new ApiCallback<Map>() {
             @Override
             public void onSuccess(Map map) {
                 if (map != null) {
@@ -251,7 +251,7 @@ public class DashboardDrawerFragment extends Fragment {
             public void onFailure(String message) {
 
             }
-        });
+        });*/
 
         return expandableListDetails;
         /*LinkedHashMap<String, List<String>> expandableListDetail = new LinkedHashMap<String, List<String>>();

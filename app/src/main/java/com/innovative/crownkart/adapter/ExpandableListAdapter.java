@@ -22,19 +22,26 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> expandableListTitle;
     private HashMap<String, List<String>> expandableListDetail;
-    List<String> list;
+    //List<String> list;
 
     public static int ITEM1 = 0;
     public static int ITEM2 = 1;
     public static int ITEM3 = 2;
     public static int ITEM4 = 3;
 
+    public ExpandableListAdapter(Context context, List<String> expandableListTitle, HashMap<String, List<String>> expandableListDetail) {
+        this.context = context;
+        this.expandableListTitle = expandableListTitle;
+        this.expandableListDetail = expandableListDetail;
+        //this.list=list;
+    }
+
 
     public ExpandableListAdapter(Context context, List<String> expandableListTitle, HashMap<String, List<String>> expandableListDetail,List<String> list) {
         this.context = context;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
-        this.list=list;
+        //this.list=list;
     }
 
     @Override
