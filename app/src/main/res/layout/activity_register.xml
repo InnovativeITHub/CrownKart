@@ -1,192 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.innovative.crownkart.activities.RegisterActivity"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context="com.innovative.crownkart.activities.RegisterActivity">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+        android:layout_gravity="top"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:id="@+id/title_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.innovative.crownkart.views.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_crown_title"
+                android:textColor="#FF0"
+                android:textSize="32sp"
+                app:font="@string/bold_glegoo" />
+
+            <com.innovative.crownkart.views.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_kart_title"
+                android:textColor="#000"
+                android:textSize="36sp"
+                app:font="@string/bold_glegoo" />
+
+        </LinearLayout>
+
+        <com.innovative.crownkart.views.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Create your CrownKart Account"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:font="@string/regular_sans" />
+
+        <com.innovative.crownkart.views.CustomEditText
+            android:id="@+id/et_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/edittext_rectangle_background"
+            android:hint="Username"
+            android:imeOptions="actionNext"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:font="@string/regular_sans" />
+
+        <com.innovative.crownkart.views.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="We'll send you a text verification"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:font="@string/regular_sans" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="12dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-
-            <LinearLayout
-                android:id="@+id/title_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/img_logo"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_marginBottom="20dp">
-
-                <com.innovative.crownkart.views.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:font="@string/bold_glegoo"
-                    android:text="@string/app_crown_title"
-                    android:textSize="32sp"
-                    android:textColor="#FF0" />
-
-                <com.innovative.crownkart.views.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:font="@string/bold_glegoo"
-                    android:text="@string/app_kart_title"
-                    android:textSize="36sp"
-                    android:textColor="#000"/>
-
-            </LinearLayout>
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
             <com.innovative.crownkart.views.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:font="@string/semibold_sans"
-                android:layout_marginBottom="8dp"
-                android:text="Create your CrownKart Account"
-                android:textColor="@color/black"
-                android:textSize="22sp"/>
-
-            <com.innovative.crownkart.views.CustomEditText
-                android:id="@+id/et_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
                 android:background="@drawable/edittext_rectangle_background"
                 android:padding="10dp"
-                android:hint="Username"
+                android:text="IN +91"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:inputType="textPersonName"
-                android:imeOptions="actionNext"
-                android:maxLines="1"
-                android:layout_marginTop="24dp"/>
-
-            <com.innovative.crownkart.views.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:font="@string/regular_sans"
-                android:layout_marginTop="12dp"
-                android:text="We'll send you a text verification"
-                android:textColor="@color/black"
-                android:textSize="16sp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="12dp">
-
-                <com.innovative.crownkart.views.CustomEditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_rectangle_background"
-                    android:padding="10dp"
-                    android:textSize="16sp"
-                    android:layout_marginRight="4dp"
-                    android:text="IN +91"
-                    android:textColor="@color/black"
-                    app:font="@string/regular_sans"/>
-
-                <com.innovative.crownkart.views.CustomEditText
-                    android:id="@+id/et_mobile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_rectangle_background"
-                    android:padding="10dp"
-                    android:layout_marginLeft="4dp"
-                    android:hint="Mobile Number"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:inputType="number"
-                    android:imeOptions="actionNext"
-                    android:maxLines="1"
-                    android:maxLength="10"
-                    app:font="@string/regular_sans"/>
-
-            </LinearLayout>
+                android:textSize="14sp"
+                app:font="@string/regular_sans" />
 
             <com.innovative.crownkart.views.CustomEditText
-                android:id="@+id/et_email_address"
+                android:id="@+id/et_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
                 android:background="@drawable/edittext_rectangle_background"
-                android:padding="10dp"
-                android:hint="Email address"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:inputType="textEmailAddress"
+                android:hint="Mobile Number"
                 android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="10"
                 android:maxLines="1"
-                android:layout_marginTop="12dp"
-                app:font="@string/regular_sans"/>
-
-            <com.innovative.crownkart.views.CustomEditText
-                android:id="@+id/et_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext_rectangle_background"
                 android:padding="10dp"
-                android:hint="Password"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:inputType="textPassword"
-                android:imeOptions="actionNext"
-                android:maxLines="1"
-                android:layout_marginTop="12dp"
-                app:font="@string/regular_sans"/>
-
-            <CheckBox
-                android:id="@+id/cb_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:padding="10dp"
-                android:text="Show password"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:maxLines="1"
-                />
-
-            <com.innovative.crownkart.views.CustomButton
-                android:id="@+id/btn_signup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_rectangle_background"
-                android:layout_marginTop="12dp"
-                android:text="Continue"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:imeOptions="actionDone"
-                app:font="@string/regular_sans"/>
-
-            <com.innovative.crownkart.views.CustomTextView
-                android:id="@+id/tv_already_exist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:font="@string/regular_sans"
-                android:layout_gravity="center"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
-                android:padding="8dp"
-                android:text="Already have an account?"
-                android:textColor="@color/blue"
-                android:textSize="16sp" />
+                android:textSize="14sp"
+                app:font="@string/regular_sans" />
 
         </LinearLayout>
 
-    </RelativeLayout>
+        <com.innovative.crownkart.views.CustomEditText
+            android:id="@+id/et_email_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_rectangle_background"
+            android:hint="Email address"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:font="@string/regular_sans" />
+
+        <com.innovative.crownkart.views.CustomEditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_rectangle_background"
+            android:hint="Password"
+            android:imeOptions="actionNext"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:font="@string/regular_sans" />
+
+        <CheckBox
+            android:id="@+id/cb_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:text="Show password"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <com.innovative.crownkart.views.CustomButton
+            android:id="@+id/btn_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_rectangle_background"
+            android:gravity="center"
+            android:imeOptions="actionDone"
+            android:text="Continue"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:font="@string/regular_sans" />
+
+        <com.innovative.crownkart.views.CustomTextView
+            android:id="@+id/tv_already_exist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:padding="8dp"
+            android:text="Already have an account?"
+            android:textColor="@color/blue"
+            android:textSize="14sp"
+            app:font="@string/regular_sans" />
+
+    </LinearLayout>
 
 </ScrollView>

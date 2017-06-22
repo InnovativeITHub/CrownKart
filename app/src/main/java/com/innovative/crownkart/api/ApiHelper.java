@@ -2,6 +2,7 @@ package com.innovative.crownkart.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.innovative.crownkart.R;
 import com.innovative.crownkart.config.App;
 
 import org.json.JSONObject;
@@ -42,7 +43,7 @@ public class ApiHelper {
     private void initApiService() {
         Gson gson = new GsonBuilder().serializeNulls().create();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://crownkart.com/crownKart/api/")
+                .baseUrl("http://crownkar.escuela.in/api/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         //http://crownkart.com/crownKart/api/

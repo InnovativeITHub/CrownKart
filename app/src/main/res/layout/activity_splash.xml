@@ -10,10 +10,10 @@
         android:id="@+id/iv_logo"
         android:layout_width="@dimen/app_logo_width"
         android:layout_height="@dimen/app_logo_height"
-        android:src="@mipmap/splash_logo"
-        android:scaleType="fitXY"
         android:layout_centerInParent="true"
-        android:contentDescription="@null"/>
+        android:contentDescription="@null"
+        android:scaleType="fitXY"
+        android:src="@mipmap/splash_logo" />
 
     <LinearLayout
         android:id="@+id/title_container"
@@ -21,36 +21,38 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/title_container_margin_top"
+        android:layout_marginTop="-12dp"
         android:orientation="horizontal">
 
         <com.innovative.crownkart.views.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:font="@string/semibold_sans"
             android:text="@string/app_crown_title"
-            android:textSize="@dimen/app_crown_textsize"
-            android:textColor="#3AB0E1" />
+            android:textColor="#3AB0E1"
+            android:textSize="32sp"
+            app:font="@string/semibold_sans" />
 
         <com.innovative.crownkart.views.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:font="string/semibold_sans"
             android:text="@string/app_kart_title"
-            android:textSize="@dimen/app_kart_textsize"
-            android:textColor="#FF0"/>
+            android:textColor="#FF0"
+            android:textSize="36sp"
+            app:font="@string/semibold_sans" />
 
     </LinearLayout>
 
 
     <com.innovative.crownkart.views.CustomTextView
-        android:layout_below="@+id/title_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/title_container"
         android:layout_centerHorizontal="true"
-        app:font="@string/regular_glegoo"
-        android:text="F o r    F a s h i o n   L o v e r s"
-        android:textSize="@dimen/fashion_title_textsize"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:text="For   Fashion  Lovers"
         android:textColor="@color/black"
-        android:layout_marginTop="6dp"/>
+        android:textSize="24sp"
+        app:font="@string/regular_glegoo" />
+
 </RelativeLayout>

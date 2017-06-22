@@ -1,5 +1,6 @@
 package com.innovative.crownkart.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -78,5 +79,12 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @OnClick(R.id.tv_already_exist)
+    public void onClickExistAccount() {
+        startActivity(new Intent(App.getAppContext(), LoginActivity.class));
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        finish();
     }
 }

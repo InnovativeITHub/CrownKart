@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,162 +10,166 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="bottom">
-
-        <ImageView
-            android:id="@+id/img_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:src="@mipmap/splash_logo"/>
+        android:layout_gravity="top">
 
         <LinearLayout
             android:id="@+id/title_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/img_logo"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginBottom="28dp">
+            android:orientation="horizontal">
 
             <com.innovative.crownkart.views.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:font="@string/bold_glegoo"
                 android:text="@string/app_crown_title"
+                android:textColor="#FF0"
                 android:textSize="32sp"
-                android:textColor="#FF0" />
+                app:font="@string/bold_glegoo" />
 
             <com.innovative.crownkart.views.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:font="@string/bold_glegoo"
                 android:text="@string/app_kart_title"
+                android:textColor="#000"
                 android:textSize="36sp"
-                android:textColor="#000"/>
+                app:font="@string/bold_glegoo" />
 
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/title_container">
+            android:layout_below="@+id/title_container"
+            android:padding="16dp">
 
-            <com.innovative.crownkart.views.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:font="@string/semibold_sans"
-                android:text="Sign in"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:layout_marginLeft="16dp"/>
+            <RelativeLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <com.innovative.crownkart.views.CustomTextView
-                android:id="@+id/tv_forgot_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                app:font="@string/regular_sans"
-                android:padding="8dp"
-                android:text="Forgot Password?"
-                android:textColor="@color/blue"
-                android:textSize="16sp"
-                android:layout_marginRight="16dp"/>
+                <com.innovative.crownkart.views.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Sign in"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    app:font="@string/regular_sans" />
+
+                <com.innovative.crownkart.views.CustomTextView
+                    android:id="@+id/tv_forgot_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="8dp"
+                    android:text="Forgot Password?"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp"
+                    app:font="@string/regular_sans" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_forgot_password"
-                android:orientation="vertical"
-                android:padding="12dp"
-                android:layout_marginTop="8dp">
+                android:layout_below="@id/container"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
 
                 <com.innovative.crownkart.views.CustomEditText
                     android:id="@+id/et_email_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_rectangle_background"
-                    android:padding="10dp"
                     android:hint="Email address"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:inputType="textEmailAddress"
                     android:imeOptions="actionNext"
-                    android:maxLines="1" />
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:font="@string/regular_sans" />
 
                 <com.innovative.crownkart.views.CustomEditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/edittext_rectangle_background"
-                    android:layout_marginTop="8dp"
-                    android:padding="10dp"
                     android:hint="Password"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:inputType="textPassword"
                     android:imeOptions="actionNext"
-                    android:maxLines="1" />
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:font="@string/regular_sans" />
 
                 <CheckBox
                     android:id="@+id/cb_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
+                    android:maxLines="1"
                     android:padding="10dp"
                     android:text="Show password"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:maxLines="1" />
+                    android:textSize="14sp" />
 
                 <com.innovative.crownkart.views.CustomButton
                     android:id="@+id/btn_signin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/button_rectangle_background"
-                    android:layout_marginTop="8dp"
-                    android:text="Sign in"
                     android:gravity="center"
+                    android:imeOptions="actionDone"
+                    android:text="Sign in"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:imeOptions="actionDone" />
+                    android:textSize="14sp"
+                    app:font="@string/regular_sans" />
 
                 <com.innovative.crownkart.views.CustomButton
                     android:id="@+id/btn_skip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/button_rectangle_background"
-                    android:layout_marginTop="8dp"
-                    android:text="Skip"
                     android:gravity="center"
+                    android:imeOptions="actionDone"
+                    android:text="Skip"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:imeOptions="actionDone" />
+                    android:textSize="14sp"
+                    app:font="@string/regular_sans" />
 
                 <com.innovative.crownkart.views.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:font="@string/regular_sans"
-                    android:layout_marginTop="8dp"
-                    android:padding="8dp"
                     android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
                     android:hint="-------- New to CrownKart? --------"
+                    android:padding="8dp"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp"
+                    app:font="@string/regular_sans" />
 
                 <com.innovative.crownkart.views.CustomButton
                     android:id="@+id/btn_signup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/edittext_rectangle_background"
-                    android:layout_marginTop="8dp"
-                    android:text="Create a new CrownKart account"
                     android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
                     android:imeOptions="actionDone"
-                    android:layout_marginBottom="8dp"/>
+                    android:text="Create a new CrownKart account"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:font="@string/regular_sans" />
 
             </LinearLayout>
 

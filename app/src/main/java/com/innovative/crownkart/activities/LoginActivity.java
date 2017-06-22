@@ -1,14 +1,11 @@
 package com.innovative.crownkart.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
@@ -29,7 +26,6 @@ import butterknife.OnClick;
 
 
 public class LoginActivity extends AppCompatActivity {
-
     @BindView(R.id.et_email_address)
     CustomEditText etEmailAddress;
     @BindView(R.id.et_password)
@@ -40,16 +36,12 @@ public class LoginActivity extends AppCompatActivity {
     CheckBox cbShowPassword;
 
     private String emailAddress, password;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         tvForgotPassword.setPaintFlags(tvForgotPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        //SharedPreferences sharedPreferences = getSharedPreferences("crownkart", Context.MODE_PRIVATE);
-        //Log.v("json", sharedPreferences.getString("crown", "hello"));
-
 
         cbShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
