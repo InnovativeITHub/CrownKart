@@ -1,10 +1,13 @@
 package com.innovative.crownkart.api;
 
+import com.innovative.crownkart.R;
+
 import org.json.JSONObject;
 
 import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -33,4 +36,7 @@ public interface ApiService {
     @POST("categoryProduct.php")
     Call<Map> getDrawerItems();
 
+    @FormUrlEncoded
+    @POST("mainProducts.php")
+    Call<Map> getMainProduct(@Field("main_id") String mainId);
 }

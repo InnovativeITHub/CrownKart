@@ -24,6 +24,16 @@ public class CategoryDTO implements Serializable {
     private String productId;
     @SerializedName("category_name")
     private String subCategoryName;
+    @SerializedName("category_image")
+    private int categoryImage;
+
+    public int getCategoryImage() {
+        return categoryImage;
+    }
+
+    public void setCategoryImage(int categoryImage) {
+        this.categoryImage = categoryImage;
+    }
 
     private List<SubcategoryDTO> subcategoryDTOList;
 

@@ -2,6 +2,7 @@ package com.innovative.crownkart.activities;
 
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,7 +18,9 @@ import com.innovative.crownkart.adapter.ExpandableAdapter;
 import com.innovative.crownkart.config.App;
 import com.innovative.crownkart.dto.CategoryDTO;
 import com.innovative.crownkart.dto.SubcategoryDTO;
+import com.innovative.crownkart.fragments.CategoryCompleteItemsFragment;
 import com.innovative.crownkart.fragments.CategoryFragment;
+import com.innovative.crownkart.fragments.HomeFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DashboardActivity extends AppCompatActivity {
     @BindView(R.id.elv_category)
@@ -79,18 +83,13 @@ public class DashboardActivity extends AppCompatActivity {
             //SelectItem(0);
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new CategoryFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
 //        getSupportActionBar().setTitle(toolbarTitle);
 
         elvCategory.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-//                Toast.makeText(getApplicationContext(), categoryDTOList.get(groupPosition).getMainCategoryName()
-//                                + " : " + map.get(categoryDTOList.get(groupPosition).getMainCategoryName()).get(childPosition).getSubCategoryName()
-//                                + " : " + map.get(categoryDTOList.get(groupPosition).getMainCategoryName()).get(childPosition).getProductId()
-//                        , Toast.LENGTH_SHORT).show();
-
                 toolbarTitle = categoryDTOList.get(groupPosition).getMainCategoryName() + " : "
                         + map.get(categoryDTOList.get(groupPosition).getMainCategoryName()).get(childPosition).getSubCategoryName();
 
@@ -126,7 +125,6 @@ public class DashboardActivity extends AppCompatActivity {
         //frgManager.beginTransaction().replace(R.id.container, new CategoryFragment()).commit();
 
         //getSupportActionBar().setTitle(toolbarTitle);
-
     }
 
     private void getListFromPref() {
@@ -154,6 +152,7 @@ public class DashboardActivity extends AppCompatActivity {
                         subcategoryDTO.setSubCategoryName("");
                     }
                     subcategoryDTOList.add(subcategoryDTO);
+
                 }
                 categoryDTO.setSubcategoryDTOList(subcategoryDTOList);
                 categoryDTOList.add(categoryDTO);
@@ -175,4 +174,11 @@ public class DashboardActivity extends AppCompatActivity {
 //        mTitle = title;
 //        getSupportActionBar().setTitle(mTitle);
 //    }
+
+    @OnClick(R.id.home)
+    public void onClickHome() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+        getSupportActionBar().setTitle("CrownKart");
+        drawerLayout.closeDrawers();
+    }
 }

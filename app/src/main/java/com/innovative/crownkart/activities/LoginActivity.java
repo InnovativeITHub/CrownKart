@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     CheckBox cbShowPassword;
 
     private String emailAddress, password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +58,10 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.tv_forgot_password)
     public void onClickForgotPassword() {
-
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.docmein&hl=en");
+        startActivityForResult(Intent.createChooser(shareIntent, "Docmein"), 101);
     }
 
     @OnClick(R.id.btn_signin)
@@ -68,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
             App.getApiHelper().loginUser(emailAddress, password, new ApiCallback<Map>() {
                 @Override
                 public void onSuccess(Map map) {
-                    LinkedTreeMap treeMap=((LinkedTreeMap)((LinkedTreeMap)map.get("response")).get("result"));
+                    LinkedTreeMap treeMap = ((LinkedTreeMap) ((LinkedTreeMap) map.get("response")).get("result"));
                     SnackbarUtil.showLongSnackbar(LoginActivity.this, treeMap.get("msg").toString());
 
                     startActivity(new Intent(App.getAppContext(), DashboardActivity.class));

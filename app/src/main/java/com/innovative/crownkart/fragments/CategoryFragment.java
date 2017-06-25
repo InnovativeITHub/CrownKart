@@ -2,11 +2,13 @@ package com.innovative.crownkart.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.ProgressBar;
 
 import com.google.gson.internal.LinkedTreeMap;
 import com.innovative.crownkart.R;
+import com.innovative.crownkart.activities.ProductDetailActivity;
 import com.innovative.crownkart.adapter.SpecificProductAdapter;
 import com.innovative.crownkart.api.ApiCallback;
 import com.innovative.crownkart.config.App;
@@ -69,7 +72,13 @@ public class CategoryFragment extends Fragment {
                     } else {
                         rvItems.setVisibility(View.VISIBLE);
                         no_item_found.setVisibility(View.INVISIBLE);
-                        rvItems.setAdapter(new SpecificProductAdapter(productDetailList));
+                        rvItems.setAdapter(new SpecificProductAdapter(productDetailList, new SpecificProductAdapter.OnProductSelectionListener() {
+                            @Override
+                            public void onProductSelect(int position) {
+                                Intent intent = new Intent(App.getAppContext(), ProductDetailActivity.class);
+                                startActivity(intent);
+                            }
+                        }));
                     }
                 }
 

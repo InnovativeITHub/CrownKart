@@ -107,4 +107,18 @@ public class ApiHelper {
             }
         });
     }
+
+    public void getMainProduct(String mainId,final ApiCallback<Map> apiCallback) {
+        apiService.getMainProduct(mainId).enqueue(new Callback<Map>() {
+            @Override
+            public void onResponse(Call<Map> call, Response<Map> response) {
+                apiCallback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Map> call, Throwable t) {
+                apiCallback.onFailure("unable to parse data from server");
+            }
+        });
+    }
 }

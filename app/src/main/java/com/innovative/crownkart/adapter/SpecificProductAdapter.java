@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Pulkit on 11-Jun-17.
@@ -30,9 +31,15 @@ import butterknife.ButterKnife;
 
 public class SpecificProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<LinkedTreeMap> productDetailList;
+    private OnProductSelectionListener onProductSelectionListener;
 
-    public SpecificProductAdapter(ArrayList<LinkedTreeMap> productDetailList) {
+    public interface OnProductSelectionListener {
+        public void onProductSelect(int position);
+    }
+
+    public SpecificProductAdapter(ArrayList<LinkedTreeMap> productDetailList, OnProductSelectionListener onProductSelectionListener) {
         this.productDetailList = productDetailList;
+        this.onProductSelectionListener = onProductSelectionListener;
     }
 
     @Override
@@ -45,14 +52,14 @@ public class SpecificProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         final LinkedTreeMap linkedTreeMap = productDetailList.get(position);
 
         final SpecificProductHolder holder = (SpecificProductHolder) viewHolder;
-            if (linkedTreeMap.get("category_name") != null)
-                holder.tvCatName.setText(linkedTreeMap.get("category_name").toString());
-            if (linkedTreeMap.get("product_description") != null)
-                holder.tvProductDescription.setText(linkedTreeMap.get("product_description").toString());
-            if (linkedTreeMap.get("price") != null)
-                holder.tvPrice.setText(linkedTreeMap.get("price").toString());
-            if (linkedTreeMap.get("product_images") != null)
-                Picasso.with(App.getAppContext()).load("http://crownkar.escuela.in/admin/" + linkedTreeMap.get("product_images").toString()).error(R.mipmap.tshirt).into(holder.ivProductImage);
+        if (linkedTreeMap.get("category_name") != null)
+            holder.tvCatName.setText(linkedTreeMap.get("category_name").toString());
+        if (linkedTreeMap.get("product_description") != null)
+            holder.tvProductDescription.setText(linkedTreeMap.get("product_description").toString());
+        if (linkedTreeMap.get("price") != null)
+            holder.tvPrice.setText(linkedTreeMap.get("price").toString());
+        if (linkedTreeMap.get("product_images") != null)
+            Picasso.with(App.getAppContext()).load("http://crownkar.escuela.in/admin/" + linkedTreeMap.get("product_images").toString()).error(R.mipmap.tshirt).into(holder.ivProductImage);
 
     }
 
@@ -80,6 +87,11 @@ public class SpecificProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             /*ivProductImage = ButterKnife.findById(activity, R.id.iv_product_image);
             tvCatName = ButterKnife.findById(activity, R.id.tv_cat_name);
             tvProductDescription = ButterKnife.findById(activity, R.id.tv_product_description);*/
+        }
+
+        @OnClick(R.id.rl_container)
+        public void onClickCard() {
+            onProductSelectionListener.onProductSelect(getLayoutPosition());
         }
     }
 }
