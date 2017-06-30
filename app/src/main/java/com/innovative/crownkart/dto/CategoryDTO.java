@@ -14,6 +14,7 @@ import java.util.List;
  */
 
 public class CategoryDTO implements Serializable {
+
     @SerializedName("main_id")
     private String mainCatId;
     @SerializedName("main_category")

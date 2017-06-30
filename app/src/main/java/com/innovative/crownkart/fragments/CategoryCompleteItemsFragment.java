@@ -67,20 +67,30 @@ public class CategoryCompleteItemsFragment extends Fragment {
         map.put("main_id", mainCatId);
         App.getApiHelper().getMainProduct(mainCatId, new ApiCallback<Map>() {
             @Override
-            public void onSuccess(Map map) {
+            public void onSuccess(final Map map) {
                 progress_bar.setVisibility(View.INVISIBLE);
                 ArrayList<LinkedTreeMap> linkedTreeMaps = new ArrayList<LinkedTreeMap>();
-                linkedTreeMaps.addAll(((ArrayList) map.get("response")));
-
-                rvItems.setVisibility(View.VISIBLE);
-                no_item_found.setVisibility(View.INVISIBLE);
-                rvItems.setAdapter(new SpecificProductAdapter(linkedTreeMaps, new SpecificProductAdapter.OnProductSelectionListener() {
-                    @Override
-                    public void onProductSelect(int position) {
-                        Intent intent = new Intent(App.getAppContext(), ProductDetailActivity.class);
-                        startActivity(intent);
+                linkedTreeMaps = (((ArrayList) map.get("response")));
+                for (int i = 0; i < linkedTreeMaps.size(); i++) {
+                    String has_product = ((LinkedTreeMap) (((ArrayList) map.get("response")).get(i))).get("has_product").toString();
+                    if (has_product.equals("false")) {
+                        rvItems.setVisibility(View.INVISIBLE);
+                        no_item_found.setVisibility(View.VISIBLE);
+                        no_item_found.setText("No Item found");
+                    } else {
+                        rvItems.setVisibility(View.VISIBLE);
+                        no_item_found.setVisibility(View.INVISIBLE);
+                        rvItems.setAdapter(new SpecificProductAdapter(linkedTreeMaps, new SpecificProductAdapter.OnProductSelectionListener() {
+                            @Override
+                            public void onProductSelect(int position) {
+                                final String pro_id = ((LinkedTreeMap) (((ArrayList) map.get("response")).get(position))).get("pro_id").toString();
+                                Intent intent = new Intent(App.getAppContext(), ProductDetailActivity.class);
+                                intent.putExtra("pro_id", pro_id);
+                                startActivity(intent);
+                            }
+                        }));
                     }
-                }));
+                }
             }
 
             @Override

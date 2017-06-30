@@ -39,4 +39,17 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("mainProducts.php")
     Call<Map> getMainProduct(@Field("main_id") String mainId);
+
+    @FormUrlEncoded
+    @POST("singleProductDetail.php")
+    Call<Map> getSingleProductDetails(@Field("pro_id") String pro_id);
+
+    @FormUrlEncoded
+    @POST("addToCart.php")
+    Call<Map> addToCart(@Field("email") String email,
+                        @Field("pro_id") String pro_id,
+                        @Field("size") String size,
+                        @Field("quantity") String quantity,
+                        @Field("price") String price);
+
 }

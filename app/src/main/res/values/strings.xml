@@ -9,6 +9,8 @@
     <string name="crown_name">Crown</string>
     <string name="kart_name">Kart</string>
     <string name="fields_empty">Fields Can\'t be empty</string>
+    <string name="action_settings">Settings</string>
+    <string name="logout">Logout</string>
 
     <!--
     ================================================================================================

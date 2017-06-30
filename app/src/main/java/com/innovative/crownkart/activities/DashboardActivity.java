@@ -9,6 +9,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import com.innovative.crownkart.dto.SubcategoryDTO;
 import com.innovative.crownkart.fragments.CategoryCompleteItemsFragment;
 import com.innovative.crownkart.fragments.CategoryFragment;
 import com.innovative.crownkart.fragments.HomeFragment;
+import com.innovative.crownkart.sharePreference.SharedPrefernceValue;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -151,8 +154,11 @@ public class DashboardActivity extends AppCompatActivity {
                         subcategoryDTO.setProductId("");
                         subcategoryDTO.setSubCategoryName("");
                     }
-                    subcategoryDTOList.add(subcategoryDTO);
+                    if (Boolean.parseBoolean(childObject.getString("has_product")) == false) {
 
+                    } else {
+                        subcategoryDTOList.add(subcategoryDTO);
+                    }
                 }
                 categoryDTO.setSubcategoryDTOList(subcategoryDTOList);
                 categoryDTOList.add(categoryDTO);
@@ -181,4 +187,36 @@ public class DashboardActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("CrownKart");
         drawerLayout.closeDrawers();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        } else if (id == R.id.logout) {
+            logout();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void logout() {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SharedPrefernceValue.MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(SharedPrefernceValue.IS_LOGGED_IN);
+//        editor.clear();
+        editor.commit();
+
+        Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

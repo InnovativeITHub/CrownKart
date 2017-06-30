@@ -30,7 +30,7 @@
             android:id="@+id/tv_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tushar Baweja"
+            android:text="PJC Infotech"
             android:textColor="@color/blue"
             android:textSize="16sp"
             app:font="@string/regular_sans" />
@@ -39,7 +39,7 @@
             android:id="@+id/tv_mobile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="9730657307"
+            android:text="+91-00000000"
             android:textColor="@color/blue"
             android:textSize="16sp"
             app:font="@string/regular_sans" />

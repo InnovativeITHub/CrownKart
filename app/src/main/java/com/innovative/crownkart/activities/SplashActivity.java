@@ -18,6 +18,7 @@ import com.innovative.crownkart.api.ApiCallback;
 import com.innovative.crownkart.config.App;
 import com.innovative.crownkart.dto.CategoryDTO;
 import com.innovative.crownkart.dto.SubcategoryDTO;
+import com.innovative.crownkart.sharePreference.SharedPrefernceValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
     private List<CategoryDTO> categoryDTOList = new ArrayList<>();
+    boolean isLoggedin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,19 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         ButterKnife.bind(this);
-        initDataAndSplashLogic();
+        init();
+    }
+
+    private void init() {
+        sharedPreferences = getSharedPreferences("crownkart", Context.MODE_PRIVATE);
+        isLoggedin = Boolean.parseBoolean(sharedPreferences.getString(SharedPrefernceValue.IS_LOGGED_IN, ""));
+        if (isLoggedin) {
+            Intent intent = new Intent(SplashActivity.this, DashboardActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            initDataAndSplashLogic();
+        }
     }
 
     private void initDataAndSplashLogic() {
@@ -68,10 +82,9 @@ public class SplashActivity extends AppCompatActivity {
                     categoryDTO.setSubcategoryDTOList(subCategoryDTOList);
                     categoryDTOList.add(categoryDTO);
                 }
-                sharedPreferences = getSharedPreferences("crownkart", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
                 Gson gson = new Gson();
                 String json = gson.toJson(categoryDTOList);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("crown", json);
                 editor.commit();
                 new Handler().postDelayed(new Runnable() {
@@ -89,6 +102,5 @@ public class SplashActivity extends AppCompatActivity {
                 Toast.makeText(SplashActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }

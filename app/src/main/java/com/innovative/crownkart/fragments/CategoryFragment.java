@@ -59,13 +59,13 @@ public class CategoryFragment extends Fragment {
         String id = preferences.getString("product_id", "1");
         App.getApiHelper().getSpecificProduct(id, new ApiCallback<Map>() {
             @Override
-            public void onSuccess(Map map) {
+            public void onSuccess(final Map map) {
                 progress_bar.setVisibility(View.INVISIBLE);
                 ArrayList<LinkedTreeMap> productDetailList = new ArrayList();
                 productDetailList = (ArrayList) map.get("response");
                 for (int i = 0; i < productDetailList.size(); i++) {
-                    Object o = ((LinkedTreeMap) (((ArrayList) map.get("response")).get(i))).get("has_product");
-                    if (o.equals("false")) {
+                    String has_product = ((LinkedTreeMap) (((ArrayList) map.get("response")).get(i))).get("has_product").toString();
+                    if (has_product.equals("false")) {
                         rvItems.setVisibility(View.INVISIBLE);
                         no_item_found.setVisibility(View.VISIBLE);
                         no_item_found.setText("No Item found");
@@ -75,13 +75,14 @@ public class CategoryFragment extends Fragment {
                         rvItems.setAdapter(new SpecificProductAdapter(productDetailList, new SpecificProductAdapter.OnProductSelectionListener() {
                             @Override
                             public void onProductSelect(int position) {
+                                final String pro_id = ((LinkedTreeMap) (((ArrayList) map.get("response")).get(position))).get("pro_id").toString();
                                 Intent intent = new Intent(App.getAppContext(), ProductDetailActivity.class);
+                                intent.putExtra("pro_id", pro_id);
                                 startActivity(intent);
                             }
                         }));
                     }
                 }
-
             }
 
             @Override
