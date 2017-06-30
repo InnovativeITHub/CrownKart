@@ -126,12 +126,16 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         tv_quantity.setText(String.valueOf(total_item));
         tv_product_price.setText(String.valueOf(total_price));
+
+        iv_quantity_minus.setClickable(true);
+        iv_quantity_minus.setImageResource(R.drawable.dark_icon_minus);
     }
 
     @OnClick(R.id.iv_quantity_minus)
     public void on_click_quantity_minus() {
 
-        if (count >= 0) {
+        if (total_item > 0) {
+
             total_item = --count;
             total_price = Integer.parseInt(price) * total_item;
 
@@ -139,7 +143,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             tv_product_price.setText(String.valueOf(total_price));
         }
         else {
-            iv_quantity_minus.setEnabled(false);
+            iv_quantity_minus.setClickable(false);
+            iv_quantity_minus.setImageResource(R.drawable.light_icon_minus);
         }
     }
 

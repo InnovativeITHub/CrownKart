@@ -20,14 +20,19 @@
         </activity>
         <activity
             android:name=".activities.LoginActivity"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize|adjustPan" />
         <activity
             android:name=".activities.RegisterActivity"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.DashboardActivity"
             android:theme="@style/MyAppTheme" />
-        <activity android:name=".activities.ProductDetailActivity" />
+        <activity
+            android:name=".activities.ProductDetailActivity"
+            android:theme="@style/AppTheme" />
+
     </application>
 
 </manifest>

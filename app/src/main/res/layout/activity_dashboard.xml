@@ -21,6 +21,7 @@
             android:minHeight="?attr/actionBarSize"
             android:textDirection="firstStrong"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/MyDarkToolbarStyle"
             app:titleTextColor="@color/white" />
 
         <FrameLayout
