@@ -69,5 +69,13 @@
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
 
+    <!--
+    ================================================================================================
+    Login Activity String
+    ================================================================================================
+    -->
+
+    <string name="fa_shopping_cart">&#xf07a;</string>
+
 
 </resources>

@@ -30,6 +30,7 @@ import butterknife.OnClick;
  */
 
 public class SpecificProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private ArrayList<LinkedTreeMap> productDetailList;
     private OnProductSelectionListener onProductSelectionListener;
 

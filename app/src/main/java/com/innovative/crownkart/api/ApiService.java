@@ -45,6 +45,15 @@ public interface ApiService {
     Call<Map> getSingleProductDetails(@Field("pro_id") String pro_id);
 
     @FormUrlEncoded
+    @POST("buyProducts.php")
+    Call<Map> buyProducts(@Field("email") String email,
+                          @Field("pro_id") String pro_id,
+                          @Field("size") String size,
+                          @Field("quantity") String quantity,
+                          @Field("price") String price,
+                          @Field("total") String total);
+
+    @FormUrlEncoded
     @POST("addToCart.php")
     Call<Map> addToCart(@Field("email") String email,
                         @Field("pro_id") String pro_id,
@@ -52,4 +61,7 @@ public interface ApiService {
                         @Field("quantity") String quantity,
                         @Field("price") String price);
 
+    @FormUrlEncoded
+    @POST("viewCart.php")
+    Call<Map> viewCart(@Field("email") String email);
 }

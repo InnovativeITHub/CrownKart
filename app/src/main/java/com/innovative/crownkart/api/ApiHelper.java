@@ -136,8 +136,37 @@ public class ApiHelper {
         });
     }
 
+    public void buyProducts(String email, String pro_id, String size, String quantity, String price, String total_price, final ApiCallback<Map> apiCallback) {
+        apiService.buyProducts(email, pro_id, size, quantity, price, total_price).enqueue(new Callback<Map>() {
+            @Override
+            public void onResponse(Call<Map> call, Response<Map> response) {
+                apiCallback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Map> call, Throwable t) {
+                apiCallback.onFailure("unable to parse data from server");
+            }
+        });
+
+    }
+
     public void addToCart(String email, String pro_id, String size, String quantity, String price, final ApiCallback<Map> apiCallback) {
         apiService.addToCart(email, pro_id, size, quantity, price).enqueue(new Callback<Map>() {
+            @Override
+            public void onResponse(Call<Map> call, Response<Map> response) {
+                apiCallback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Map> call, Throwable t) {
+                apiCallback.onFailure("unable to parse data from server");
+            }
+        });
+    }
+
+    public void viewCart(String email, final ApiCallback<Map> apiCallback) {
+        apiService.viewCart(email).enqueue(new Callback<Map>() {
             @Override
             public void onResponse(Call<Map> call, Response<Map> response) {
                 apiCallback.onSuccess(response.body());

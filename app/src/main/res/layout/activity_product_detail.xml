@@ -29,6 +29,37 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
+        <com.innovative.crownkart.views.CustomTextView
+            android:id="@+id/shopping_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="20dp"
+            android:maxLines="1"
+            android:text="@string/fa_shopping_cart"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/rel_blood"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="end"
+            android:background="@drawable/blood_circle">
+
+            <com.innovative.crownkart.views.CustomTextView
+                android:id="@+id/shopping_cart_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="0"
+                android:textColor="@color/blue"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
     </android.support.v7.widget.Toolbar>
 
     <android.support.v4.widget.NestedScrollView
@@ -158,11 +189,11 @@
                             android:padding="2dp">
 
                             <ImageView
-                                android:id="@+id/iv_add"
+                                android:id="@+id/iv_minus"
                                 android:layout_width="28dp"
                                 android:layout_height="28dp"
                                 android:layout_centerVertical="true"
-                                android:src="@mipmap/icon_add" />
+                                android:src="@mipmap/icon_minus" />
 
                             <com.innovative.crownkart.views.CustomTextView
                                 android:id="@+id/tv_size"
@@ -173,8 +204,8 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginRight="20dp"
                                 android:layout_marginTop="6dp"
-                                android:layout_toEndOf="@+id/iv_add"
-                                android:layout_toRightOf="@+id/iv_add"
+                                android:layout_toEndOf="@+id/iv_minus"
+                                android:layout_toRightOf="@+id/iv_minus"
                                 android:text="XL"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
@@ -182,13 +213,13 @@
 
 
                             <ImageView
-                                android:id="@+id/iv_minus"
+                                android:id="@+id/iv_add"
                                 android:layout_width="28dp"
                                 android:layout_height="28dp"
                                 android:layout_centerVertical="true"
                                 android:layout_toEndOf="@+id/tv_size"
                                 android:layout_toRightOf="@+id/tv_size"
-                                android:src="@mipmap/icon_minus" />
+                                android:src="@mipmap/icon_add" />
 
                         </RelativeLayout>
 
@@ -225,11 +256,11 @@
                             android:padding="2dp">
 
                             <ImageView
-                                android:id="@+id/iv_quantity_add"
+                                android:id="@+id/iv_quantity_minus"
                                 android:layout_width="28dp"
                                 android:layout_height="28dp"
                                 android:layout_centerVertical="true"
-                                android:src="@mipmap/icon_add" />
+                                android:src="@mipmap/icon_minus" />
 
                             <com.innovative.crownkart.views.CustomTextView
                                 android:id="@+id/tv_quantity"
@@ -240,8 +271,8 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginRight="20dp"
                                 android:layout_marginTop="6dp"
-                                android:layout_toEndOf="@+id/iv_quantity_add"
-                                android:layout_toRightOf="@+id/iv_quantity_add"
+                                android:layout_toEndOf="@+id/iv_quantity_minus"
+                                android:layout_toRightOf="@+id/iv_quantity_minus"
                                 android:text="1"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
@@ -249,13 +280,13 @@
 
 
                             <ImageView
-                                android:id="@+id/iv_quantity_minus"
+                                android:id="@+id/iv_quantity_add"
                                 android:layout_width="28dp"
                                 android:layout_height="28dp"
                                 android:layout_centerVertical="true"
                                 android:layout_toEndOf="@+id/tv_quantity"
                                 android:layout_toRightOf="@+id/tv_quantity"
-                                android:src="@mipmap/icon_minus" />
+                                android:src="@mipmap/icon_add" />
 
                         </RelativeLayout>
 

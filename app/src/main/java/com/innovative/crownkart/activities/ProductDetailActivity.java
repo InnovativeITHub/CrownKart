@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -58,11 +59,16 @@ public class ProductDetailActivity extends AppCompatActivity {
     ImageView iv_quantity_minus;
     @BindView(R.id.single_product_detail_toolbar)
     Toolbar single_product_detail_toolbar;
+    @BindView(R.id.shopping_cart_count)
+    CustomTextView shopping_cart_count;
+    @BindView(R.id.shopping_cart)
+    CustomTextView shopping_cart;
 
     private String getIntentProId, emailAddress, category_name, product_description, price;
     private SharedPreferences sharedPreferences;
     boolean isLoggedin;
     int count = 1, total_item = 1, total_price;
+    private Typeface fontAwesomeFont;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,16 +81,18 @@ public class ProductDetailActivity extends AppCompatActivity {
 //        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        fontAwesomeFont = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
+        shopping_cart.setTypeface(fontAwesomeFont);
+
         sharedPreferences = getSharedPreferences(SharedPrefernceValue.MyPREFERENCES, Context.MODE_PRIVATE);
         isLoggedin = Boolean.parseBoolean(sharedPreferences.getString(SharedPrefernceValue.IS_LOGGED_IN, ""));
         emailAddress = sharedPreferences.getString(SharedPrefernceValue.EMAIL_ADDRESS, "");
+        getIntentProId = getIntent().getExtras().getString("pro_id");
 
         getSingleProductDetails();
-
     }
 
     private void getSingleProductDetails() {
-        getIntentProId = getIntent().getExtras().getString("pro_id");
         App.getApiHelper().getSingleProductDetails(getIntentProId, new ApiCallback<Map>() {
             @Override
             public void onSuccess(Map map) {
@@ -119,6 +127,24 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
+    @OnClick(R.id.buy_now)
+    public void on_click_buy_Product() {
+        total_price = Integer.parseInt(price);
+        App.getApiHelper().buyProducts(emailAddress, getIntentProId, "XL", String.valueOf(total_item), price, String.valueOf(total_price), new ApiCallback<Map>() {
+            @Override
+            public void onSuccess(Map map) {
+
+                System.out.println("Successfully done");
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+    }
+
+
     @OnClick(R.id.iv_quantity_add)
     public void on_click_quantity_add() {
         total_item = count++;
@@ -141,8 +167,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
             tv_quantity.setText(String.valueOf(total_item));
             tv_product_price.setText(String.valueOf(total_price));
-        }
-        else {
+        } else {
             iv_quantity_minus.setClickable(false);
             iv_quantity_minus.setImageResource(R.drawable.light_icon_minus);
         }
@@ -179,13 +204,17 @@ public class ProductDetailActivity extends AppCompatActivity {
     @OnClick(R.id.add_to_cart)
     public void on_click_add_to_cart() {
         if (isLoggedin) {
-            int a = total_price;
-            int b = total_item;
             App.getApiHelper().addToCart(emailAddress, getIntentProId, "XL", String.valueOf(total_item), String.valueOf(total_price), new ApiCallback<Map>() {
                 @Override
                 public void onSuccess(Map map) {
                     String server_response = (((LinkedTreeMap) ((LinkedTreeMap) map.get("response")).get("result")).get("message")).toString();
-                    SnackbarUtil.showLongSnackbar(ProductDetailActivity.this, total_item + " " + server_response);
+                    if (total_item == 1) {
+                        SnackbarUtil.showLongSnackbar(ProductDetailActivity.this, total_item + " " + server_response);
+                    } else {
+                        SnackbarUtil.showLongSnackbar(ProductDetailActivity.this, total_item + " " + "Product added to cart");
+                    }
+
+                    shopping_cart_count.setText(String.valueOf(total_item));
                 }
 
                 @Override
@@ -214,6 +243,14 @@ public class ProductDetailActivity extends AppCompatActivity {
                     });
             builder.show();
         }
+    }
+
+    @OnClick(R.id.shopping_cart)
+    public void on_click_shopping_cart() {
+
+        Intent intent = new Intent(ProductDetailActivity.this, ViewCart.class);
+        intent.putExtra("emailAddress",emailAddress);
+        startActivity(intent);
     }
 
     @Override

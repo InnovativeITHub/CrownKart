@@ -32,6 +32,9 @@
         <activity
             android:name=".activities.ProductDetailActivity"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.ViewCart"
+            android:theme="@style/AppTheme" />
 
     </application>
 

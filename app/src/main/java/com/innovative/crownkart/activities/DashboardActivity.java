@@ -1,29 +1,29 @@
 package com.innovative.crownkart.activities;
 
-import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import com.innovative.crownkart.R;
 import com.innovative.crownkart.adapter.ExpandableAdapter;
 import com.innovative.crownkart.config.App;
 import com.innovative.crownkart.dto.CategoryDTO;
 import com.innovative.crownkart.dto.SubcategoryDTO;
-import com.innovative.crownkart.fragments.CategoryCompleteItemsFragment;
 import com.innovative.crownkart.fragments.CategoryFragment;
 import com.innovative.crownkart.fragments.HomeFragment;
 import com.innovative.crownkart.sharePreference.SharedPrefernceValue;
+import com.innovative.crownkart.views.CustomTextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +44,8 @@ public class DashboardActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.drawer_logout)
+    CustomTextView drawer_logout;
 
     List<CategoryDTO> categoryDTOList = new ArrayList<>();
     List<SubcategoryDTO> subcategoryDTOList;
@@ -52,7 +54,7 @@ public class DashboardActivity extends AppCompatActivity {
     private ExpandableAdapter expandableAdapter;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private String toolbarTitle;
-    private CharSequence mDrawerTitle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +89,6 @@ public class DashboardActivity extends AppCompatActivity {
         }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
-//        getSupportActionBar().setTitle(toolbarTitle);
 
         elvCategory.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
@@ -188,11 +189,11 @@ public class DashboardActivity extends AppCompatActivity {
         drawerLayout.closeDrawers();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main_menu, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -200,23 +201,41 @@ public class DashboardActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
-        } else if (id == R.id.logout) {
-            logout();
         }
+//        else if (id == R.id.logout) {
+//            logout();
+//        }
 
         return super.onOptionsItemSelected(item);
     }
 
+    @OnClick(R.id.drawer_logout)
     public void logout() {
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SharedPrefernceValue.MyPREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(SharedPrefernceValue.IS_LOGGED_IN);
-//        editor.clear();
-        editor.commit();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to logout?")
+                .setTitle("CrownKart")
+                .setIcon(R.mipmap.splash_logo)
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SharedPrefernceValue.MyPREFERENCES, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.remove(SharedPrefernceValue.IS_LOGGED_IN);
+//                        editor.clear();
+                        editor.commit();
 
-        Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
+                        Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.show();
     }
-
 }
