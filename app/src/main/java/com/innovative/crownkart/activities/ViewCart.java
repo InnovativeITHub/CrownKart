@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -44,6 +45,8 @@ public class ViewCart extends AppCompatActivity {
     }
 
     private void getViewCartItems() {
+
+        rv_view_cart_items.setLayoutManager(new LinearLayoutManager(App.getAppContext()));
         App.getApiHelper().viewCart(emailAddress, new ApiCallback<Map>() {
             @Override
             public void onSuccess(final Map map) {
