@@ -2,6 +2,8 @@ package com.innovative.crownkart.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by Pulkit on 28-Jun-17.
  */
@@ -23,7 +25,7 @@ public class SingleProductDTO {
     @SerializedName("discount")
     private int discount;
     @SerializedName("product_images")
-    private int product_images;
+    private String product_images;
     @SerializedName("new_price")
     private int new_price;
 
@@ -59,6 +61,16 @@ public class SingleProductDTO {
         this.product_description = product_description;
     }
 
+    private List<SizeInfoDTo> sizeInfoDTOList;
+
+    public List<SizeInfoDTo> getSizeInfoDTOList() {
+        return sizeInfoDTOList;
+    }
+
+    public void setSizeInfoDTOList(List<SizeInfoDTo> sizeInfoDTOList) {
+        this.sizeInfoDTOList = sizeInfoDTOList;
+    }
+
     public String getColor_code() {
         return color_code;
     }
@@ -83,11 +95,11 @@ public class SingleProductDTO {
         this.discount = discount;
     }
 
-    public int getProduct_images() {
+    public String getProduct_images() {
         return product_images;
     }
 
-    public void setProduct_images(int product_images) {
+    public void setProduct_images(String product_images) {
         this.product_images = product_images;
     }
 

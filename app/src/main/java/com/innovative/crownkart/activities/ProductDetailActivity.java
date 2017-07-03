@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import com.innovative.crownkart.R;
 import com.innovative.crownkart.api.ApiCallback;
 import com.innovative.crownkart.config.App;
 import com.innovative.crownkart.dto.SingleProductDTO;
+import com.innovative.crownkart.dto.SizeInfoDTo;
 import com.innovative.crownkart.sharePreference.SharedPrefernceValue;
 import com.innovative.crownkart.utils.SnackbarUtil;
 import com.innovative.crownkart.views.CustomButton;
@@ -43,6 +45,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     CustomTextView tv_colour_code;
     @BindView(R.id.rb_product_rating)
     AppCompatRatingBar rb_product_rating;
+    @BindView(R.id.tv_size)
+    CustomTextView tv_size;
     @BindView(R.id.tv_quantity)
     CustomTextView tv_quantity;
     @BindView(R.id.buy_now)
@@ -55,6 +59,13 @@ public class ProductDetailActivity extends AppCompatActivity {
     ImageView iv_product_image;
     @BindView(R.id.progress_bar)
     ProgressBar progress_bar;
+
+    @BindView(R.id.iv_add)
+    ImageView iv_add;
+    @BindView(R.id.iv_minus)
+    ImageView iv_minus;
+    @BindView(R.id.iv_quantity_add)
+    ImageView iv_quantity_add;
     @BindView(R.id.iv_quantity_minus)
     ImageView iv_quantity_minus;
     @BindView(R.id.single_product_detail_toolbar)
@@ -92,31 +103,40 @@ public class ProductDetailActivity extends AppCompatActivity {
         getSingleProductDetails();
     }
 
+    SingleProductDTO singleProductDTO;
+
     private void getSingleProductDetails() {
         App.getApiHelper().getSingleProductDetails(getIntentProId, new ApiCallback<Map>() {
             @Override
             public void onSuccess(Map map) {
 
-                SingleProductDTO singleProductDTO = null;
                 String image_uri = "http://crownkar.escuela.in/admin/";
                 singleProductDTO = new SingleProductDTO();
-                category_name = ((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("category_name").toString();
-                String gender = ((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("gender").toString();
-                product_description = ((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("product_description").toString();
-                String color_code = ((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("color_code").toString();
-                price = ((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("price").toString();
-                String discount = ((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("discount").toString();
-                String product_images = ((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("product_images").toString();
-                String new_price = ((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("new_price").toString();
+                singleProductDTO.setCategory_name(((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("category_name").toString());
+                singleProductDTO.setGender(((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("gender").toString());
+                singleProductDTO.setProduct_description(((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("product_description").toString());
+                singleProductDTO.setColor_code(((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("color_code").toString());
+                singleProductDTO.setPrice(Integer.parseInt(((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("price").toString()));
+                singleProductDTO.setDiscount(Integer.parseInt(((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("discount").toString()));
+                singleProductDTO.setProduct_images(((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("product_images").toString());
+                singleProductDTO.setNew_price(Integer.parseInt(((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("new_price").toString()));
 
-                tv_product_name.setText(product_description);
-                tv_product_price.setText(price);
-                tv_colour_code.setText(color_code);
-
-                Picasso.with(getApplicationContext()).load(image_uri + product_images).into(iv_product_image);
+                ArrayList<SizeInfoDTo> sizeInfoDToList = new ArrayList();
+                for (int i = 0; i < ((ArrayList) ((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("sizes")).size(); i++) {
+                    SizeInfoDTo sizeInfoDTo = new SizeInfoDTo();//((ArrayList)((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("sizes")).get(i);
+                    sizeInfoDTo.setSize(((LinkedTreeMap) (((ArrayList) ((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("sizes")).get(i))).get("size").toString());
+                    sizeInfoDTo.setQuantity(((LinkedTreeMap) (((ArrayList) ((LinkedTreeMap) ((ArrayList) map.get("response")).get(0)).get("sizes")).get(i))).get("qty").toString());
+                    sizeInfoDToList.add(sizeInfoDTo);
+                }
+                singleProductDTO.setSizeInfoDTOList(sizeInfoDToList);
+                tv_product_name.setText(singleProductDTO.getProduct_description());
+                tv_product_price.setText(singleProductDTO.getPrice() + "");
+                tv_colour_code.setText(singleProductDTO.getColor_code());
+                //   tv_size.setText(singleProductDTO.getSizeInfoDTOList().get(0).getSize());
+                Picasso.with(getApplicationContext()).load(image_uri + singleProductDTO.getProduct_images()).into(iv_product_image);
                 progress_bar.setVisibility(View.INVISIBLE);
 
-                toolbar_title.setText(category_name);
+                toolbar_title.setText(singleProductDTO.getCategory_name());
 
             }
 
@@ -144,17 +164,54 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
+    int max_size = 0;
+
+    @OnClick(R.id.iv_add)
+    public void on_click_size_add() {
+        if (max_size < singleProductDTO.getSizeInfoDTOList().size()) {
+            max_size = count++;
+            String size = singleProductDTO.getSizeInfoDTOList().get(max_size).getSize();
+            tv_size.setText(size);
+        } else {
+            max_size = singleProductDTO.getSizeInfoDTOList().size() - 1;
+            tv_size.setText(singleProductDTO.getSizeInfoDTOList().get(max_size).getSize());
+            iv_add.setClickable(false);
+        }
+
+        iv_minus.setClickable(true);
+    }
+
+    @OnClick(R.id.iv_minus)
+    public void on_click_size_minus() {
+        if (max_size > 0) {
+            max_size = count--;
+            String size = singleProductDTO.getSizeInfoDTOList().get(max_size).getSize();
+            tv_size.setText(size);
+        } else {
+            max_size = singleProductDTO.getSizeInfoDTOList().size() - 1;
+            tv_size.setText(singleProductDTO.getSizeInfoDTOList().get(max_size).getSize());
+            iv_minus.setClickable(false);
+        }
+
+        iv_add.setClickable(true);
+    }
 
     @OnClick(R.id.iv_quantity_add)
     public void on_click_quantity_add() {
-        total_item = count++;
-        total_price = Integer.parseInt(price) * total_item;
+        int qty = Integer.parseInt(singleProductDTO.getSizeInfoDTOList().get(max_size).getQuantity());
+        if (total_item < qty) {
+            total_item = count++;
+            total_price = Integer.parseInt(price) * total_item;
 
-        tv_quantity.setText(String.valueOf(total_item));
-        tv_product_price.setText(String.valueOf(total_price));
+            tv_quantity.setText(String.valueOf(total_item));
+            tv_product_price.setText(String.valueOf(total_price));
 
-        iv_quantity_minus.setClickable(true);
-        iv_quantity_minus.setImageResource(R.drawable.dark_icon_minus);
+            iv_quantity_minus.setClickable(true);
+            iv_quantity_minus.setImageResource(R.mipmap.dark_icon_minus);
+        } else {
+            iv_quantity_add.setClickable(false);
+            iv_quantity_add.setImageResource(R.mipmap.light_icon_minus);
+        }
     }
 
     @OnClick(R.id.iv_quantity_minus)
@@ -167,9 +224,12 @@ public class ProductDetailActivity extends AppCompatActivity {
 
             tv_quantity.setText(String.valueOf(total_item));
             tv_product_price.setText(String.valueOf(total_price));
+
+            iv_quantity_add.setClickable(true);
+            iv_quantity_add.setImageResource(R.mipmap.icon_add);
         } else {
             iv_quantity_minus.setClickable(false);
-            iv_quantity_minus.setImageResource(R.drawable.light_icon_minus);
+            iv_quantity_minus.setImageResource(R.mipmap.light_icon_minus);
         }
     }
 
@@ -249,7 +309,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     public void on_click_shopping_cart() {
 
         Intent intent = new Intent(ProductDetailActivity.this, ViewCart.class);
-        intent.putExtra("emailAddress",emailAddress);
+        intent.putExtra("emailAddress", emailAddress);
         startActivity(intent);
     }
 
