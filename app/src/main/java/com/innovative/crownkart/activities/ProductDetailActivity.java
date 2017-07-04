@@ -78,7 +78,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private String getIntentProId, emailAddress, category_name, product_description, price;
     private SharedPreferences sharedPreferences;
     boolean isLoggedin;
-    int count = 1, total_item = 1, total_price;
+    int count = 0,sizecount = 1, total_item = 1, total_price;
     private Typeface fontAwesomeFont;
 
     @Override
@@ -132,7 +132,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                 tv_product_name.setText(singleProductDTO.getProduct_description());
                 tv_product_price.setText(singleProductDTO.getPrice() + "");
                 tv_colour_code.setText(singleProductDTO.getColor_code());
-                //   tv_size.setText(singleProductDTO.getSizeInfoDTOList().get(0).getSize());
+                tv_size.setText(singleProductDTO.getSizeInfoDTOList().get(0).getSize());
+                tv_quantity.setText(singleProductDTO.getSizeInfoDTOList().get(0).getQuantity());
                 Picasso.with(getApplicationContext()).load(image_uri + singleProductDTO.getProduct_images()).into(iv_product_image);
                 progress_bar.setVisibility(View.INVISIBLE);
 
@@ -168,37 +169,42 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.iv_add)
     public void on_click_size_add() {
-        if (max_size < singleProductDTO.getSizeInfoDTOList().size()) {
-            max_size = count++;
+        if (max_size < singleProductDTO.getSizeInfoDTOList().size()-1) {
+            max_size = sizecount++;
             String size = singleProductDTO.getSizeInfoDTOList().get(max_size).getSize();
             tv_size.setText(size);
         } else {
             max_size = singleProductDTO.getSizeInfoDTOList().size() - 1;
             tv_size.setText(singleProductDTO.getSizeInfoDTOList().get(max_size).getSize());
             iv_add.setClickable(false);
+            iv_add.setImageResource(R.drawable.icon_light_add);
         }
 
         iv_minus.setClickable(true);
+        iv_minus.setImageResource(R.mipmap.dark_icon_minus);
     }
 
     @OnClick(R.id.iv_minus)
     public void on_click_size_minus() {
         if (max_size > 0) {
-            max_size = count--;
+            max_size = --sizecount;
             String size = singleProductDTO.getSizeInfoDTOList().get(max_size).getSize();
             tv_size.setText(size);
         } else {
-            max_size = singleProductDTO.getSizeInfoDTOList().size() - 1;
+            max_size = 0;
             tv_size.setText(singleProductDTO.getSizeInfoDTOList().get(max_size).getSize());
             iv_minus.setClickable(false);
+            iv_minus.setImageResource(R.mipmap.light_icon_minus);
         }
 
         iv_add.setClickable(true);
+        iv_add.setImageResource(R.mipmap.icon_add);
     }
 
     @OnClick(R.id.iv_quantity_add)
     public void on_click_quantity_add() {
         int qty = Integer.parseInt(singleProductDTO.getSizeInfoDTOList().get(max_size).getQuantity());
+        price=String.valueOf(singleProductDTO.getPrice());
         if (total_item < qty) {
             total_item = count++;
             total_price = Integer.parseInt(price) * total_item;
@@ -210,16 +216,16 @@ public class ProductDetailActivity extends AppCompatActivity {
             iv_quantity_minus.setImageResource(R.mipmap.dark_icon_minus);
         } else {
             iv_quantity_add.setClickable(false);
-            iv_quantity_add.setImageResource(R.mipmap.light_icon_minus);
+            iv_quantity_add.setImageResource(R.drawable.icon_light_add);
         }
     }
 
     @OnClick(R.id.iv_quantity_minus)
     public void on_click_quantity_minus() {
+        price=String.valueOf(singleProductDTO.getPrice());
 
         if (total_item > 0) {
-
-            total_item = --count;
+            total_item = count--;
             total_price = Integer.parseInt(price) * total_item;
 
             tv_quantity.setText(String.valueOf(total_item));
