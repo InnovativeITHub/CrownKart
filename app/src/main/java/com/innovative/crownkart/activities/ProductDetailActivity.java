@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -314,7 +313,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     @OnClick(R.id.shopping_cart)
     public void on_click_shopping_cart() {
 
-        Intent intent = new Intent(ProductDetailActivity.this, ViewCart.class);
+        Intent intent = new Intent(ProductDetailActivity.this, ViewCartActivity.class);
         intent.putExtra("emailAddress", emailAddress);
         startActivity(intent);
     }

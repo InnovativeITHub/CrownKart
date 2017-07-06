@@ -33,7 +33,8 @@
             android:name=".activities.ProductDetailActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activities.ViewCart"
+            android:name=".activities.ViewCartActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:theme="@style/AppTheme" />
 
     </application>

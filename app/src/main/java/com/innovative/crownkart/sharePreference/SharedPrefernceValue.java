@@ -9,5 +9,6 @@ public class SharedPrefernceValue {
     public static final String MyPREFERENCES = "crownkart";
     public static final String IS_LOGGED_IN = "isLoggedin";
     public static final String EMAIL_ADDRESS = "email";
+    public static final String TOTAL_CHARGE = "total_charge";
 
 }
