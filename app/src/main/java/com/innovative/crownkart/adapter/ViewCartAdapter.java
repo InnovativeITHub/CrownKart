@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.google.gson.internal.LinkedTreeMap;
 import com.innovative.crownkart.R;
+import com.innovative.crownkart.dto.CartDTO;
 import com.innovative.crownkart.sharePreference.SharedPrefernceValue;
 import com.innovative.crownkart.views.CustomTextView;
 import com.squareup.picasso.Picasso;
@@ -26,10 +27,10 @@ import butterknife.ButterKnife;
 
 public class ViewCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<LinkedTreeMap> viewCartList;
+    private ArrayList<CartDTO> viewCartList;
     private Context context;
 
-    public ViewCartAdapter(Context context, ArrayList<LinkedTreeMap> viewCartList) {
+    public ViewCartAdapter(Context context, ArrayList<CartDTO> viewCartList) {
         this.context = context;
         this.viewCartList = viewCartList;
     }
@@ -43,22 +44,21 @@ public class ViewCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
 
-        final LinkedTreeMap linkedTreeMap = viewCartList.get(position);
+        CartDTO cartDTO = viewCartList.get(position);
 
         final ViewCartHolder holder = (ViewCartHolder) viewHolder;
-        String cartID = linkedTreeMap.get("cart_id").toString();
+        String pro_id = cartDTO.getPro_id();
         String imageURL = "http://crownkar.escuela.in/admin/";
 
-        String product_images = ((LinkedTreeMap) ((ArrayList) linkedTreeMap.get("product_description")).get(0)).get("product_images").toString();
-        String full_url = imageURL + product_images;
-        String total_charge = linkedTreeMap.get("total_charge").toString();
+       String item_price = cartDTO.getPrice();
 
-        if (cartID != null) {
-            holder.tvCatName.setText(((LinkedTreeMap) ((ArrayList) linkedTreeMap.get("product_description")).get(0)).get("category_name").toString());
-//            holder.tv_size.setText(((LinkedTreeMap)((ArrayList)linkedTreeMap.get("product_description")).get(0)).get("category_name").toString());
-//            holder.tv_quantity.setText(((LinkedTreeMap)((ArrayList)linkedTreeMap.get("product_description")).get(0)).get("category_name").toString());
-            holder.tv_price.setText(((LinkedTreeMap) ((ArrayList) linkedTreeMap.get("product_description")).get(0)).get("price").toString());
-//            holder.ivProductImage.setText(((LinkedTreeMap)((ArrayList)linkedTreeMap.get("product_description")).get(0)).get("category_name").toString());
+        if (pro_id != null) {
+            holder.tvCatName.setText(cartDTO.getCategory_name());
+            String product_images = cartDTO.getProduct_images();
+            String full_url = imageURL + product_images;
+            holder.tv_price.setText(item_price);
+            holder.tv_quantity.setText(cartDTO.getQuantity());
+            holder.tv_size.setText(cartDTO.getSize());
             Picasso.with(context).load(full_url).into(holder.ivProductImage);
         }
 

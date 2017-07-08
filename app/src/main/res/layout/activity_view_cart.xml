@@ -63,7 +63,7 @@
                 app:font="@string/semibold_sans" />
 
             <LinearLayout
-                android:id="@+id/et_enter_coupon_code"
+                android:id="@+id/enter_coupon_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_enter_coupon_code"
@@ -71,7 +71,7 @@
                 android:weightSum="1">
 
                 <com.innovative.crownkart.views.CustomEditText
-                    android:id="@+id/et_enter_csoupon_code"
+                    android:id="@+id/et_enter_coupon_code"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
@@ -82,6 +82,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
+                    android:textAllCaps="true"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textSize="14sp"
@@ -97,6 +98,7 @@
                     android:layout_weight="0.1"
                     android:background="@drawable/button_rectangle_background"
                     android:padding="10dp"
+                    android:imeOptions="actionDone"
                     android:text="@string/apply"
                     android:textColor="@color/white"
                     app:font="@string/regular_sans" />
@@ -107,7 +109,7 @@
                 android:id="@+id/cashback"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/et_enter_coupon_code"
+                android:layout_below="@+id/enter_coupon_code"
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:text="@string/cashback"
@@ -118,7 +120,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/et_enter_coupon_code"
+                android:layout_below="@+id/enter_coupon_code"
                 android:layout_marginTop="10dp"
                 android:drawableEnd="@mipmap/rupee"
                 android:drawableRight="@mipmap/rupee"

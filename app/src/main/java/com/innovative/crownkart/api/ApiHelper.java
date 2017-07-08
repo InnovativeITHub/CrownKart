@@ -178,4 +178,18 @@ public class ApiHelper {
             }
         });
     }
+    public  void applyCoupon(String email, String couponCode, final ApiCallback<Map> apiCallback){
+        apiService.applyCoupon(email,couponCode).enqueue(new Callback<Map>(){
+            @Override
+            public void onResponse(Call<Map> call, Response<Map> response) {
+            apiCallback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Map> call, Throwable t) {
+                apiCallback.onFailure("unable to parse data from server");
+                t.printStackTrace();
+            }
+        });
+    }
 }

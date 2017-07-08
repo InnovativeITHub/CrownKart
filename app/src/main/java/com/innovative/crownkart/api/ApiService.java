@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -64,4 +65,9 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("viewCart.php")
     Call<Map> viewCart(@Field("email") String email);
+
+    @FormUrlEncoded
+    @POST("applyCoupon.php")
+    Call<Map> applyCoupon(@Field("email") String email, @Field("coupon_code") String coupon_code);
+
 }
