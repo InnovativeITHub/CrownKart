@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_buy_order"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.innovative.crownkart.activities.BuyOrderActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/single_product_detail_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/blue"
+        android:gravity="center"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/MyDarkToolbarStyle"
+        app:titleTextColor="@color/white" />
+
+    <com.innovative.crownkart.views.CustomTextView
+        android:id="@+id/iv_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/single_product_detail_toolbar"
+        android:paddingLeft="20dp"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:text="1"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:font="@string/semibold_sans" />
+
+    <com.innovative.crownkart.views.CustomTextView
+        android:id="@+id/tv_product_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/single_product_detail_toolbar"
+        android:layout_toEndOf="@+id/iv_one"
+        android:layout_toRightOf="@+id/iv_one"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/login_details"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:font="@string/semibold_sans" />
+
+    <!--<com.innovative.crownkart.views.CustomTextView-->
+    <!--android:id="@+id/signed_in"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/single_product_detail_toolbar"-->
+    <!--android:paddingLeft="20dp"-->
+    <!--android:paddingTop="10dp"-->
+    <!--android:text="@string/login_details"-->
+    <!--android:textColor="@color/black"-->
+    <!--android:textSize="18sp"-->
+    <!--android:textStyle="bold"-->
+    <!--app:font="@string/semibold_sans" />-->
+
+</RelativeLayout>

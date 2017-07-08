@@ -48,6 +48,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         final ViewCartHolder holder = (ViewCartHolder) viewHolder;
         String cartID = linkedTreeMap.get("cart_id").toString();
         String imageURL = "http://crownkar.escuela.in/admin/";
+
         String product_images = ((LinkedTreeMap) ((ArrayList) linkedTreeMap.get("product_description")).get(0)).get("product_images").toString();
         String full_url = imageURL + product_images;
         String total_charge = linkedTreeMap.get("total_charge").toString();

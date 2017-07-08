@@ -77,6 +77,7 @@
     <string name="register_name_empty">CrownKart</string>
     <string name="register_error_empty">CrownKart</string>
     <string name="register_mobile">CrownKart</string>
+    <string name="login_details">Login Details</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

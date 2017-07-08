@@ -17,6 +17,7 @@ import com.innovative.crownkart.adapter.ViewCartAdapter;
 import com.innovative.crownkart.api.ApiCallback;
 import com.innovative.crownkart.config.App;
 import com.innovative.crownkart.sharePreference.SharedPrefernceValue;
+import com.innovative.crownkart.views.CustomButton;
 import com.innovative.crownkart.views.CustomTextView;
 
 import java.util.ArrayList;
@@ -26,16 +27,23 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ViewCartActivity extends AppCompatActivity {
+
     @BindView(R.id.rv_view_cart_items)
     RecyclerView rv_view_cart_items;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
     @BindView(R.id.sv)
     NestedScrollView scrollView;
-    @BindView(R.id.tv_price1)
-    CustomTextView tv_price1;
+    @BindView(R.id.tv_price_one)
+    CustomTextView tv_price_one;
+    @BindView(R.id.tv_price_two)
+    CustomTextView tv_price_two;
+    @BindView(R.id.tv_price_three)
+    CustomTextView tv_price_three;
+    @BindView(R.id.btn_place_order)
+    CustomButton btn_place_order;
 
-    private String emailAddress,tv_price_one;
+    private String emailAddress;
     private SharedPreferences sharedPreferences;
     private ViewCartAdapter viewCartAdapter;
 
@@ -48,12 +56,17 @@ public class ViewCartActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         scrollView.setVisibility(View.GONE);
 
-
         sharedPreferences = getSharedPreferences(SharedPrefernceValue.MyPREFERENCES, Context.MODE_PRIVATE);
         emailAddress = sharedPreferences.getString(SharedPrefernceValue.EMAIL_ADDRESS, "");
         getViewCartItems();
-        //rv_view_cart_items.stopNestedScroll();
-        tv_price1.setText(tv_price_one);
+
+        btn_place_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ViewCartActivity.this, BuyOrderActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void getViewCartItems() {
@@ -75,8 +88,24 @@ public class ViewCartActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 scrollView.setVisibility(View.VISIBLE);
 
+                String subTotal = ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("subtotal").toString();
+                String cart_id = ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("cart_id").toString();
+                String pro_id = ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(0)).get("pro_id").toString();
+                String product_id = ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(0)).get("product_id").toString();
+                String color_code = ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(0)).get("color_code").toString();
+                String discount = ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(0)).get("discount").toString();
+                String price = ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(0)).get("price").toString();
+                String product_images = ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(0)).get("product_images").toString();
+                String category_name = ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(0)).get("category_name").toString();
+                String product_description = ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(0)).get("product_description").toString();
+                String gender = ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(0)).get("gender").toString();
+
 
                 rv_view_cart_items.setVisibility(View.VISIBLE);
+                tv_price_one.setText(subTotal);
+                tv_price_two.setText(subTotal);
+                tv_price_three.setText(subTotal);
+
                 viewCartAdapter = new ViewCartAdapter(getApplicationContext(), viewCartList);
                 rv_view_cart_items.setAdapter(viewCartAdapter);
 
