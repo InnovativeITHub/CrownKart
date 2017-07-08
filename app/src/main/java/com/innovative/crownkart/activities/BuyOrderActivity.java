@@ -65,29 +65,40 @@ public class BuyOrderActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(SharedPrefernceValue.MyPREFERENCES, Context.MODE_PRIVATE);
         emailAddress = sharedPreferences.getString(SharedPrefernceValue.EMAIL_ADDRESS, "");
+<<<<<<< HEAD
+=======
+        firstName = sharedPreferences.getString(SharedPrefernceValue.FIRST_NAME, "");
+        lastName = sharedPreferences.getString(SharedPrefernceValue.LAST_NAME, "");
+        addressName = sharedPreferences.getString(SharedPrefernceValue.ADDRESS_NAME, "");
+        landmarkName = sharedPreferences.getString(SharedPrefernceValue.LANDMARK_NAME, "");
+        pincodeName = sharedPreferences.getString(SharedPrefernceValue.PINCODE_NAME, "");
+        cityName = sharedPreferences.getString(SharedPrefernceValue.CITY_NAME, "");
+        stateName = sharedPreferences.getString(SharedPrefernceValue.STATE_NAME, "");
+        countryName = sharedPreferences.getString(SharedPrefernceValue.COUNTRY_NAME, "");
+        phoneName = sharedPreferences.getString(SharedPrefernceValue.PHONE_NAME, "");
+>>>>>>> 13a50e4ad502e436ec0ddb320f4ca01b769f41b5
 
         tv_logged_in.setText(emailAddress);
 
-        add_new_address.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(BuyOrderActivity.this, NewAddressActivity.class);
-                startActivity(intent);
-            }
-        });
+        if (addressName == null && addressName == "") {
+            add_new_address.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            add_new_address.setVisibility(View.GONE);
+        }
 
-        tv_shipment_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
 
     @OnClick(R.id.tv_shipment_edit)
     public void onClickEdit() {
 
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        Intent intent = new Intent(BuyOrderActivity.this, NewAddressActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.add_new_address)
+    public void onClickNewAddress() {
 
         Intent intent = new Intent(BuyOrderActivity.this, NewAddressActivity.class);
         startActivity(intent);

@@ -1,11 +1,15 @@
 package com.innovative.crownkart.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.innovative.crownkart.R;
 import com.innovative.crownkart.sharePreference.SharedPrefernceValue;
@@ -44,9 +48,12 @@ public class NewAddressActivity extends AppCompatActivity {
     @BindView(R.id.btn_cancel)
     CustomButton btn_cancel;
 
+    private ArrayAdapter<String> adapter;
+    private List<String> list;
     private String firstName, lastName, addressName, landmarkName, pincodeName,
             cityName, stateName, countryName, phoneName, saveContinue;
     private SharedPreferences sharedPreferences;
+    private Intent getIntentData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,40 @@ public class NewAddressActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         sharedPreferences = getSharedPreferences(SharedPrefernceValue.MyPREFERENCES, Context.MODE_PRIVATE);
+        getEditData();
+
+        list = new ArrayList<String>();
+        list.add("India");
+        list.add("Australia");
+        list.add("Mumbai");
+        list.add("Gujrat");
+        list.add("Goa");
+        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_country_name.setAdapter(adapter);
+    }
+
+    private void getEditData() {
+
+        firstName = sharedPreferences.getString(SharedPrefernceValue.FIRST_NAME, "");
+        lastName = sharedPreferences.getString(SharedPrefernceValue.LAST_NAME, "");
+        addressName = sharedPreferences.getString(SharedPrefernceValue.ADDRESS_NAME, "");
+        landmarkName = sharedPreferences.getString(SharedPrefernceValue.LANDMARK_NAME, "");
+        pincodeName = sharedPreferences.getString(SharedPrefernceValue.PINCODE_NAME, "");
+        cityName = sharedPreferences.getString(SharedPrefernceValue.CITY_NAME, "");
+        stateName = sharedPreferences.getString(SharedPrefernceValue.STATE_NAME, "");
+        countryName = sharedPreferences.getString(SharedPrefernceValue.COUNTRY_NAME, "");
+        phoneName = sharedPreferences.getString(SharedPrefernceValue.PHONE_NAME, "");
+
+        et_first_name.setText(firstName);
+        et_last_name.setText(lastName);
+        et_address_name.setText(addressName);
+        et_landmark_name.setText(landmarkName);
+        et_pincode_name.setText(pincodeName);
+        et_city_name.setText(cityName);
+        et_state_name.setText(stateName);
+//        spinner_country_name.s;
+        et_phone_name.setText(phoneName);
 
     }
 
@@ -71,25 +112,37 @@ public class NewAddressActivity extends AppCompatActivity {
         cityName = et_city_name.getText().toString();
         stateName = et_state_name.getText().toString();
         phoneName = et_phone_name.getText().toString();
+        spinner_country_name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                String label = adapterView.getItemAtPosition(position).toString();
+                Toast.makeText(adapterView.getContext(), "You selected: " + label,
+                        Toast.LENGTH_LONG).show();
 
+            }
 
-        ArrayAdapter<String> adapter;
-        List<String> list;
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
-        list = new ArrayList<String>();
-        list.add("Item 1");
-        list.add("Item 2");
-        list.add("Item 3");
-        list.add("Item 4");
-        list.add("Item 5");
-        adapter = new ArrayAdapter<String>(getApplicationContext(),
-                android.R.layout.simple_spinner_item, list);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_country_name.setAdapter(adapter);
+            }
+        });
 
         editor.putString(SharedPrefernceValue.FIRST_NAME, firstName);
+        editor.putString(SharedPrefernceValue.LAST_NAME, lastName);
+        editor.putString(SharedPrefernceValue.ADDRESS_NAME, addressName);
+        editor.putString(SharedPrefernceValue.LANDMARK_NAME, landmarkName);
+        editor.putString(SharedPrefernceValue.PINCODE_NAME, pincodeName);
+        editor.putString(SharedPrefernceValue.CITY_NAME, cityName);
+        editor.putString(SharedPrefernceValue.STATE_NAME, stateName);
+        editor.putString(SharedPrefernceValue.PHONE_NAME, phoneName);
+        editor.putString(SharedPrefernceValue.COUNTRY_NAME, countryName);
         editor.commit();
+        finish();
     }
 
+    @OnClick(R.id.btn_cancel)
+    public void onClickCancel(){
+        finish();
+    }
 
 }
