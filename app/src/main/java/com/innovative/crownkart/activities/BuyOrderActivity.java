@@ -65,8 +65,6 @@ public class BuyOrderActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(SharedPrefernceValue.MyPREFERENCES, Context.MODE_PRIVATE);
         emailAddress = sharedPreferences.getString(SharedPrefernceValue.EMAIL_ADDRESS, "");
-<<<<<<< HEAD
-=======
         firstName = sharedPreferences.getString(SharedPrefernceValue.FIRST_NAME, "");
         lastName = sharedPreferences.getString(SharedPrefernceValue.LAST_NAME, "");
         addressName = sharedPreferences.getString(SharedPrefernceValue.ADDRESS_NAME, "");
@@ -76,7 +74,14 @@ public class BuyOrderActivity extends AppCompatActivity {
         stateName = sharedPreferences.getString(SharedPrefernceValue.STATE_NAME, "");
         countryName = sharedPreferences.getString(SharedPrefernceValue.COUNTRY_NAME, "");
         phoneName = sharedPreferences.getString(SharedPrefernceValue.PHONE_NAME, "");
->>>>>>> 13a50e4ad502e436ec0ddb320f4ca01b769f41b5
+        pro_id=getIntent().getStringExtra("pro_id");
+        if(pro_id!=null){
+            getViewCartItems(pro_id);
+        }
+        else {
+            getViewCartItems();
+        }
+
 
         tv_logged_in.setText(emailAddress);
 
@@ -102,6 +107,121 @@ public class BuyOrderActivity extends AppCompatActivity {
 
         Intent intent = new Intent(BuyOrderActivity.this, NewAddressActivity.class);
         startActivity(intent);
+    }
+    private void getViewCartItems() {
+        rv_cart_items.setLayoutManager(new LinearLayoutManager(App.getAppContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        App.getApiHelper().viewCart(emailAddress, new ApiCallback<Map>() {
+            @Override
+            public void onSuccess(final Map map) {
+
+                System.out.println("map" + map);
+                ArrayList<CartDTO> viewCartList = new ArrayList<CartDTO>();
+                progressBar.setVisibility(View.GONE);
+                scrollView.setVisibility(View.VISIBLE);
+                String coupon=((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("coupon_code").toString();
+                String benifit=((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("benifit").toString();
+
+                String subTotal = ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("subtotal").toString();
+                String cart_id = ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("cart_id").toString();
+                String total_charge= ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("total_charge").toString();
+                for(int i=0;i<((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).size();i++){
+                    CartDTO cartDTO=new CartDTO();
+                    cartDTO.setCoupon_code(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("coupon_code").toString());
+                    cartDTO.setBenifit(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("benifit").toString());
+                    cartDTO.setPro_id(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("pro_id").toString());
+                    cartDTO.setProduct_id(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("product_id").toString());
+                    cartDTO.setCategory_name(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("category_name").toString());
+                    cartDTO.setColor_code(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("color_code").toString());
+                    cartDTO.setDiscount(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("discount").toString());
+                    cartDTO.setPrice(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("price").toString());
+                    cartDTO.setProduct_images(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("product_images").toString());
+                    cartDTO.setGender(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("gender").toString());
+                    cartDTO.setSize(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("size").toString());
+                    cartDTO.setQuantity(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("quantity").toString());
+                    cartDTO.setProduct_description(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("product_description").toString());
+                    viewCartList.add(cartDTO);
+                }
+
+
+                rv_cart_items.setVisibility(View.VISIBLE);
+                tv_price_one.setText(benifit);
+                tv_price_two.setText(subTotal);
+                tvCashback.setText(coupon);
+                tv_price_three.setText(total_charge);
+                Log.v("viewCart",viewCartList.toString());
+                viewCartAdapter = new ViewCartAdapter(getApplicationContext(), viewCartList);
+                rv_cart_items.setAdapter(viewCartAdapter);
+
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+    }
+    private void getViewCartItems(String pro_id) {
+        rv_cart_items.setLayoutManager(new LinearLayoutManager(App.getAppContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        Log.v("pro_id",pro_id);
+        App.getApiHelper().buySingleProduct(emailAddress,pro_id, new ApiCallback<Map>() {
+            @Override
+            public void onSuccess(Map map) {
+
+                System.out.println("map" + map);
+                ArrayList<CartDTO> viewCartList = new ArrayList<CartDTO>();
+                progressBar.setVisibility(View.GONE);
+                scrollView.setVisibility(View.VISIBLE);
+                String coupon=((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("coupon_code").toString();
+                String benifit=((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("benifit").toString();
+
+                String subTotal = ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("subtotal").toString();
+                String cart_id = ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("cart_id").toString();
+                String total_charge= ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("total_charge").toString();
+                for(int i=0;i<((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).size();i++){
+                    CartDTO cartDTO=new CartDTO();
+                    cartDTO.setCoupon_code(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("coupon_code").toString());
+                    cartDTO.setBenifit(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("benifit").toString());
+                    cartDTO.setPro_id(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("pro_id").toString());
+                    cartDTO.setProduct_id(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("product_id").toString());
+                    cartDTO.setCategory_name(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("category_name").toString());
+                    cartDTO.setColor_code(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("color_code").toString());
+                    cartDTO.setDiscount(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("discount").toString());
+                    cartDTO.setPrice(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("price").toString());
+                    cartDTO.setProduct_images(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("product_images").toString());
+                    cartDTO.setGender(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("gender").toString());
+                    cartDTO.setSize(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("size").toString());
+                    cartDTO.setQuantity(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("quantity").toString());
+                    cartDTO.setProduct_description(((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result")).get(0)).get("product_description")).get(i)).get("product_description").toString());
+                    viewCartList.add(cartDTO);
+                }
+
+
+                rv_cart_items.setVisibility(View.VISIBLE);
+                tv_price_one.setText(benifit);
+                tv_price_two.setText(subTotal);
+                tvCashback.setText(coupon);
+                tv_price_three.setText(total_charge);
+                Log.v("viewCart",viewCartList.toString());
+                viewCartAdapter = new ViewCartAdapter(getApplicationContext(), viewCartList);
+                rv_cart_items.setAdapter(viewCartAdapter);
+
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
     }
 
 }

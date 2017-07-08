@@ -332,8 +332,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/little_rounded_corner"
                 android:gravity="top"
-                android:hint="@string/country"
-                android:textColor="@color/medium_grey" />
+                android:spinnerMode="dialog"/>
 
             <com.innovative.crownkart.views.CustomTextView
                 android:id="@+id/iv_phone"

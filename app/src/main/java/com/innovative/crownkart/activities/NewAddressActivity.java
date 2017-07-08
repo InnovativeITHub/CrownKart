@@ -70,9 +70,20 @@ public class NewAddressActivity extends AppCompatActivity {
         list.add("Mumbai");
         list.add("Gujrat");
         list.add("Goa");
-        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, list);
+        adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_textview, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_country_name.setAdapter(adapter);
+        spinner_country_name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                countryName = adapterView.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void getEditData() {
@@ -94,7 +105,6 @@ public class NewAddressActivity extends AppCompatActivity {
         et_pincode_name.setText(pincodeName);
         et_city_name.setText(cityName);
         et_state_name.setText(stateName);
-//        spinner_country_name.s;
         et_phone_name.setText(phoneName);
 
     }
@@ -112,20 +122,7 @@ public class NewAddressActivity extends AppCompatActivity {
         cityName = et_city_name.getText().toString();
         stateName = et_state_name.getText().toString();
         phoneName = et_phone_name.getText().toString();
-        spinner_country_name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                String label = adapterView.getItemAtPosition(position).toString();
-                Toast.makeText(adapterView.getContext(), "You selected: " + label, Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
+        countryName=spinner_country_name.getSelectedItem().toString();
         editor.putString(SharedPrefernceValue.FIRST_NAME, firstName);
         editor.putString(SharedPrefernceValue.LAST_NAME, lastName);
         editor.putString(SharedPrefernceValue.ADDRESS_NAME, addressName);
