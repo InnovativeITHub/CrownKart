@@ -65,6 +65,9 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("viewCart.php")
     Call<Map> viewCart(@Field("email") String email);
+    @FormUrlEncoded
+    @POST("buySinglePrduct.php")
+    Call<Map> buySingleProduct(@Field("email") String email,@Field("pro_id") String pro_id);
 
     @FormUrlEncoded
     @POST("applyCoupon.php")

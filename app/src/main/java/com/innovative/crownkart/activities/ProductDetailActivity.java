@@ -74,7 +74,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     @BindView(R.id.shopping_cart)
     CustomTextView shopping_cart;
 
-    private String getIntentProId, emailAddress, category_name, product_description, price;
+    private String getIntentProId, emailAddress, category_name, product_description, price="0";
     private SharedPreferences sharedPreferences;
     boolean isLoggedin;
     int count = 0,sizecount = 1, total_item = 1, total_price;
@@ -149,23 +149,24 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.buy_now)
     public void on_click_buy_Product() {
-//        total_price = Integer.parseInt(price);
-//        App.getApiHelper().buyProducts(emailAddress, getIntentProId, "XL", String.valueOf(total_item), price, String.valueOf(total_price), new ApiCallback<Map>() {
-//            @Override
-//            public void onSuccess(Map map) {
-//
-//                System.out.println("Successfully done");
-//            }
-//
-//            @Override
-//            public void onFailure(String message) {
-//
-//            }
-//        });
+        total_price = Integer.parseInt(tv_product_price.getText().toString());
+        App.getApiHelper().buyProducts(emailAddress, getIntentProId, tv_size.getText().toString(), String.valueOf(total_item), singleProductDTO.getPrice()+"", String.valueOf(total_price), new ApiCallback<Map>() {
+            @Override
+            public void onSuccess(Map map) {
 
+                Intent intent = new Intent(ProductDetailActivity.this, BuyOrderActivity.class);
+                intent.putExtra("pro_id",getIntentProId);
+                startActivity(intent);
 
-        Intent intent = new Intent(ProductDetailActivity.this, BuyOrderActivity.class);
-        startActivity(intent);
+                System.out.println("Successfully done");
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+
 
     }
 
