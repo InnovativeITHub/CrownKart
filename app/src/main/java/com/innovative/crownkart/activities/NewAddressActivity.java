@@ -116,8 +116,7 @@ public class NewAddressActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 String label = adapterView.getItemAtPosition(position).toString();
-                Toast.makeText(adapterView.getContext(), "You selected: " + label,
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(adapterView.getContext(), "You selected: " + label, Toast.LENGTH_LONG).show();
 
             }
 

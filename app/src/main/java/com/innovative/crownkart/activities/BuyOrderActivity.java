@@ -80,7 +80,7 @@ public class BuyOrderActivity extends AppCompatActivity {
 
         tv_logged_in.setText(emailAddress);
 
-        if (addressName == null && addressName == "") {
+        if (addressName.equals(null) || addressName.equals("")) {
             add_new_address.setVisibility(View.VISIBLE);
         }
         else
