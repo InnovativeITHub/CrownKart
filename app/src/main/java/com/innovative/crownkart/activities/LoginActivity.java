@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.widget.CheckBox;
@@ -30,6 +30,7 @@ import butterknife.OnClick;
 
 
 public class LoginActivity extends AppCompatActivity {
+
     @BindView(R.id.et_email_address)
     CustomEditText etEmailAddress;
     @BindView(R.id.et_password)

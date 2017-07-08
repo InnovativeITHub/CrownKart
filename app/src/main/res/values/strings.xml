@@ -25,14 +25,36 @@
     <string name="order_summary">Order Summary</string>
     <string name="bag_total">Bag Total</string>
     <string name="order_total">Order Total</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="shipment_details">Shipment Details</string>
+    <string name="signed_in_as">Signed in as:</string>
+    <string name="login_id">Login Id</string>
+    <string name="bag_summary">Bag Summary</string>
+    <string name="add_new_address">+ Add New Address</string>
+
+    <string name="star">*</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="address">Address</string>
+    <string name="landmark">Landmark</string>
+    <string name="pincode">Pincode</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="country">Country</string>
+    <string name="phone">Phone</string>
+    <string name="save_continue">Save and Continue</string>
+    <string name="cancel">Cancel</string>
+
 
     <!--
     ================================================================================================
      Server Level String
     ================================================================================================
     -->
-    <string name="server_url">http://crownkart.com/crownKart/api/</string>
-    <string name="local_url">http://192.168.1.103/retro/crownkart.com/crownkart.com/api/</string>
+    <!--<string name="server_url">http://crownkart.com/crownKart/api/</string>-->
+    <!--<string name="local_url">http://192.168.1.103/retro/crownkart.com/crownkart.com/api/</string>-->
 
     <!--
     ================================================================================================

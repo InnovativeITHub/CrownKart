@@ -5,9 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -149,19 +149,24 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.buy_now)
     public void on_click_buy_Product() {
-        total_price = Integer.parseInt(price);
-        App.getApiHelper().buyProducts(emailAddress, getIntentProId, "XL", String.valueOf(total_item), price, String.valueOf(total_price), new ApiCallback<Map>() {
-            @Override
-            public void onSuccess(Map map) {
+//        total_price = Integer.parseInt(price);
+//        App.getApiHelper().buyProducts(emailAddress, getIntentProId, "XL", String.valueOf(total_item), price, String.valueOf(total_price), new ApiCallback<Map>() {
+//            @Override
+//            public void onSuccess(Map map) {
+//
+//                System.out.println("Successfully done");
+//            }
+//
+//            @Override
+//            public void onFailure(String message) {
+//
+//            }
+//        });
 
-                System.out.println("Successfully done");
-            }
 
-            @Override
-            public void onFailure(String message) {
+        Intent intent = new Intent(ProductDetailActivity.this, BuyOrderActivity.class);
+        startActivity(intent);
 
-            }
-        });
     }
 
     int max_size = 0;
