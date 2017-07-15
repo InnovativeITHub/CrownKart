@@ -16,7 +16,8 @@ public class SnackbarUtil {
         Snackbar.make(activity.findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
     }
 
-    public static void showLongSnackbar(Activity activity, String message) {
+    public static Snackbar showLongSnackbar(Activity activity, String message) {
         Snackbar.make(activity.findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
+        return null;
     }
 }

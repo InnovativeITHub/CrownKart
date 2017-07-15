@@ -225,8 +225,8 @@ public class ApiHelper {
     }
 
 
-    public void getMyAccount(String firstName, String lastName, String phone, String emailAddress, final ApiCallback<Map> apiCallback) {
-        apiService.getMyAccount(firstName, lastName, phone, emailAddress).enqueue(new Callback<Map>() {
+    public void getMyAccount(String firstName, String lastName, String phone, String gender, String emailAddress, final ApiCallback<Map> apiCallback) {
+        apiService.getMyAccount(firstName, lastName, phone, gender, emailAddress).enqueue(new Callback<Map>() {
             @Override
             public void onResponse(Call<Map> call, Response<Map> response) {
                 apiCallback.onSuccess(response.body());

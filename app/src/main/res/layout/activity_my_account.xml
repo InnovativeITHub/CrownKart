@@ -126,24 +126,31 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/rb_male"
-                android:layout_width="wrap_content"
+            <RadioGroup
+                android:id="@+id/rgGender"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="right|center"
-                android:padding="10dp"
-                android:text="Male" />
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/rb_female"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="right|center"
-                android:padding="10dp"
-                android:text="Female" />
+                <RadioButton
+                    android:id="@+id/rb_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="right|center"
+                    android:padding="10dp"
+                    android:text="Male" />
 
+                <RadioButton
+                    android:id="@+id/rb_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="right|center"
+                    android:padding="10dp"
+                    android:text="Female" />
+            </RadioGroup>
         </LinearLayout>
 
         <com.innovative.crownkart.views.CustomButton

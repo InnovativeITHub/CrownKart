@@ -79,10 +79,11 @@ public interface ApiService {
     Call<Map> getSubmitData(@Field("email") String email, @Field("new_password") String new_password);
 
     @FormUrlEncoded
-    @POST("changePassword.php")
+    @POST("profile.php")
     Call<Map> getMyAccount(@Field("firstName") String firstName
             , @Field("lastName") String lastName
             , @Field("phone") String phone
+            , @Field("gender") String gender
             , @Field("emailAddress") String emailAddress);
 
 }

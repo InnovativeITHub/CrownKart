@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.innovative.crownkart.R;
 import com.innovative.crownkart.api.ApiCallback;
@@ -31,16 +32,16 @@ public class MyAccountActivity extends AppCompatActivity {
     CustomTextView et_phone;
     @BindView(R.id.et_email)
     CustomEditText et_email;
-    @BindView(R.id.rb_male)
-    RadioButton rb_male;
-    @BindView(R.id.rb_female)
-    RadioButton rb_female;
+    @BindView(R.id.rgGender)
+    RadioGroup rgGender;
     @BindView(R.id.btn_save_info)
     CustomButton btn_save_info;
 
 
+    RadioButton rb_gender;
+
     private SharedPreferences sharedPreferences;
-    private String emailAddress, firstName, lastName, phone, rbMale, rbFemale;
+    private String emailAddress, firstName, lastName, phone, gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,16 +60,19 @@ public class MyAccountActivity extends AppCompatActivity {
         firstName = et_first_name.getText().toString();
         lastName = et_last_name.getText().toString();
         phone = et_phone.getText().toString();
+        rb_gender = (RadioButton) findViewById(rgGender.getCheckedRadioButtonId());
+        gender = rb_gender.getText().toString();
         if (emailAddress.isEmpty() || emailAddress.equals(null) || emailAddress.equals("")) {
             emailAddress = et_email.getText().toString();
         } else {
             emailAddress = sharedPreferences.getString(SharedPrefernceValue.EMAIL_ADDRESS, "");
         }
 
-        App.getApiHelper().getMyAccount(firstName, lastName, phone, emailAddress, new ApiCallback<Map>() {
+        App.getApiHelper().getMyAccount(firstName, lastName, phone, gender, emailAddress, new ApiCallback<Map>() {
             @Override
             public void onSuccess(Map map) {
-                //Todo: just show the address;
+                //Todo: just show the address confirmation message;
+
             }
 
             @Override

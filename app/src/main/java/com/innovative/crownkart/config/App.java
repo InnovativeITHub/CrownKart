@@ -31,4 +31,8 @@ public class App extends Application {
     public static AppPreference getAppPreference(){
         return appPreference;
     }
+
+    public void setConnectivityListener(ConnectivityReceiver.ConnectivityReceiverListener listener) {
+        ConnectivityReceiver.connectivityReceiverListener = listener;
+    }
 }

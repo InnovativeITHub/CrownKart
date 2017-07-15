@@ -68,7 +68,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             App.getApiHelper().getSubmitData(emailAddress, new_password, new ApiCallback<Map>() {
                 @Override
                 public void onSuccess(Map map) {
-                    //Todo: just show the password change confirmation;
+                    //Todo: just show the password change confirmation message;
                 }
 
                 @Override

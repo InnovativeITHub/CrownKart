@@ -3,22 +3,27 @@ package com.innovative.crownkart.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
+import android.graphics.Color;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
-import com.google.gson.reflect.TypeToken;
+import com.innovative.crownkart.config.ConnectivityReceiver;
 import com.innovative.crownkart.R;
 import com.innovative.crownkart.api.ApiCallback;
 import com.innovative.crownkart.config.App;
 import com.innovative.crownkart.dto.CategoryDTO;
 import com.innovative.crownkart.dto.SubcategoryDTO;
 import com.innovative.crownkart.sharePreference.SharedPrefernceValue;
+import com.innovative.crownkart.utils.SnackbarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +31,11 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
     @BindView(R.id.iv_logo)
     ImageView ivLogo;
+    Button btn_temp;
 
     private SharedPreferences sharedPreferences;
     private List<CategoryDTO> categoryDTOList = new ArrayList<>();
@@ -42,7 +47,35 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         ButterKnife.bind(this);
-        init();
+        btn_temp = (Button) findViewById(R.id.btn_temp);
+        checkConnection();
+
+    }
+
+    private void checkConnection() {
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        showSnack(isConnected);
+    }
+
+    private void showSnack(boolean isConnected) {
+        String message;
+        int color;
+        if (isConnected) {
+            message = "Connected to Internet";
+            color = Color.WHITE;
+            init();
+        } else {
+            message = "Sorry! Not connected to internet";
+            color = Color.RED;
+        }
+
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.btn_temp), message, Snackbar.LENGTH_LONG);
+//        SnackbarUtil.showLongSnackbar(SplashActivity.this, message);
+
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
     }
 
     private void init() {
@@ -102,5 +135,18 @@ public class SplashActivity extends AppCompatActivity {
                 Toast.makeText(SplashActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // register connection status listener
+        App.getAppContext().setConnectivityListener(this);
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showSnack(isConnected);
     }
 }

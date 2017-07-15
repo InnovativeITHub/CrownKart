@@ -42,7 +42,6 @@
 
     </LinearLayout>
 
-
     <com.innovative.crownkart.views.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,5 +53,11 @@
         android:textColor="@color/black"
         android:textSize="24sp"
         app:font="@string/regular_glegoo" />
+
+    <Button
+        android:id="@+id/btn_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
 </RelativeLayout>
