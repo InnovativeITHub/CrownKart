@@ -83,15 +83,6 @@
             android:textSize="16sp"
             app:font="@string/semibold_sans" />
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            android:contentDescription="@null"
-            android:src="@mipmap/cancel" />
-
         <com.innovative.crownkart.views.CustomTextView
             android:id="@+id/tv_size"
             android:layout_width="wrap_content"
