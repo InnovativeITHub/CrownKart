@@ -65,12 +65,24 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("viewCart.php")
     Call<Map> viewCart(@Field("email") String email);
+
     @FormUrlEncoded
     @POST("buySinglePrduct.php")
-    Call<Map> buySingleProduct(@Field("email") String email,@Field("pro_id") String pro_id);
+    Call<Map> buySingleProduct(@Field("email") String email, @Field("pro_id") String pro_id);
 
     @FormUrlEncoded
     @POST("applyCoupon.php")
     Call<Map> applyCoupon(@Field("email") String email, @Field("coupon_code") String coupon_code);
+
+    @FormUrlEncoded
+    @POST("changePassword.php")
+    Call<Map> getSubmitData(@Field("email") String email, @Field("new_password") String new_password);
+
+    @FormUrlEncoded
+    @POST("changePassword.php")
+    Call<Map> getMyAccount(@Field("firstName") String firstName
+            , @Field("lastName") String lastName
+            , @Field("phone") String phone
+            , @Field("emailAddress") String emailAddress);
 
 }

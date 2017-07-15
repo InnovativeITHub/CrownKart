@@ -179,8 +179,8 @@ public class ApiHelper {
         });
     }
 
-    public void buySingleProduct(String email, String pro_id, final ApiCallback<Map> apiCallback){
-        apiService.buySingleProduct(email,pro_id).enqueue(new Callback<Map>() {
+    public void buySingleProduct(String email, String pro_id, final ApiCallback<Map> apiCallback) {
+        apiService.buySingleProduct(email, pro_id).enqueue(new Callback<Map>() {
             @Override
             public void onResponse(Call<Map> call, Response<Map> response) {
                 apiCallback.onSuccess(response.body());
@@ -193,11 +193,43 @@ public class ApiHelper {
             }
         });
     }
-    public  void applyCoupon(String email, String couponCode, final ApiCallback<Map> apiCallback){
-        apiService.applyCoupon(email,couponCode).enqueue(new Callback<Map>(){
+
+    public void applyCoupon(String email, String couponCode, final ApiCallback<Map> apiCallback) {
+        apiService.applyCoupon(email, couponCode).enqueue(new Callback<Map>() {
             @Override
             public void onResponse(Call<Map> call, Response<Map> response) {
-            apiCallback.onSuccess(response.body());
+                apiCallback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Map> call, Throwable t) {
+                apiCallback.onFailure("unable to parse data from server");
+
+            }
+        });
+    }
+
+    public void getSubmitData(String email, String new_password, final ApiCallback<Map> apiCallback) {
+        apiService.getSubmitData(email, new_password).enqueue(new Callback<Map>() {
+            @Override
+            public void onResponse(Call<Map> call, Response<Map> response) {
+                apiCallback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Map> call, Throwable t) {
+                apiCallback.onFailure("unable to parse data from server");
+
+            }
+        });
+    }
+
+
+    public void getMyAccount(String firstName, String lastName, String phone, String emailAddress, final ApiCallback<Map> apiCallback) {
+        apiService.getMyAccount(firstName, lastName, phone, emailAddress).enqueue(new Callback<Map>() {
+            @Override
+            public void onResponse(Call<Map> call, Response<Map> response) {
+                apiCallback.onSuccess(response.body());
             }
 
             @Override

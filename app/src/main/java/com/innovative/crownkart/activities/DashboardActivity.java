@@ -46,6 +46,11 @@ public class DashboardActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.drawer_logout)
     CustomTextView drawer_logout;
+    @BindView(R.id.drawer_faq_and_return_policy)
+    CustomTextView drawer_faq_and_return_policy;
+    @BindView(R.id.drawer_contact_us)
+    CustomTextView drawer_contact_us;
+
 
     List<CategoryDTO> categoryDTOList = new ArrayList<>();
     List<SubcategoryDTO> subcategoryDTOList;
@@ -237,5 +242,15 @@ public class DashboardActivity extends AppCompatActivity {
                     }
                 });
         builder.show();
+    }
+
+    @OnClick(R.id.drawer_faq_and_return_policy)
+    public void drawer_faq_and_return_policy() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+    }
+
+    @OnClick(R.id.drawer_contact_us)
+    public void drawer_contact_us() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
     }
 }

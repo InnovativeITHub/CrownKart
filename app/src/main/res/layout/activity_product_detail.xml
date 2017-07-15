@@ -219,7 +219,7 @@
                                 android:layout_centerVertical="true"
                                 android:layout_toEndOf="@+id/tv_size"
                                 android:layout_toRightOf="@+id/tv_size"
-                                android:src="@mipmap/icon_add" />
+                                android:src="@mipmap/dark_plus" />
 
                         </RelativeLayout>
 
@@ -286,7 +286,7 @@
                                 android:layout_centerVertical="true"
                                 android:layout_toEndOf="@+id/tv_quantity"
                                 android:layout_toRightOf="@+id/tv_quantity"
-                                android:src="@mipmap/icon_add" />
+                                android:src="@mipmap/dark_plus" />
 
                         </RelativeLayout>
 

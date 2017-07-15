@@ -182,11 +182,11 @@ public class ProductDetailActivity extends AppCompatActivity {
             max_size = singleProductDTO.getSizeInfoDTOList().size() - 1;
             tv_size.setText(singleProductDTO.getSizeInfoDTOList().get(max_size).getSize());
             iv_add.setClickable(false);
-            iv_add.setImageResource(R.drawable.icon_light_add);
+            iv_add.setImageResource(R.mipmap.light_plus);
         }
 
         iv_minus.setClickable(true);
-        iv_minus.setImageResource(R.mipmap.dark_icon_minus);
+        iv_minus.setImageResource(R.mipmap.dark_minus);
     }
 
     @OnClick(R.id.iv_minus)
@@ -199,11 +199,11 @@ public class ProductDetailActivity extends AppCompatActivity {
             max_size = 0;
             tv_size.setText(singleProductDTO.getSizeInfoDTOList().get(max_size).getSize());
             iv_minus.setClickable(false);
-            iv_minus.setImageResource(R.mipmap.light_icon_minus);
+            iv_minus.setImageResource(R.mipmap.light_minus);
         }
 
         iv_add.setClickable(true);
-        iv_add.setImageResource(R.mipmap.icon_add);
+        iv_add.setImageResource(R.mipmap.dark_plus);
     }
 
     @OnClick(R.id.iv_quantity_add)
@@ -218,10 +218,10 @@ public class ProductDetailActivity extends AppCompatActivity {
             tv_product_price.setText(String.valueOf(total_price));
 
             iv_quantity_minus.setClickable(true);
-            iv_quantity_minus.setImageResource(R.mipmap.dark_icon_minus);
+            iv_quantity_minus.setImageResource(R.mipmap.dark_minus);
         } else {
             iv_quantity_add.setClickable(false);
-            iv_quantity_add.setImageResource(R.drawable.icon_light_add);
+            iv_quantity_add.setImageResource(R.mipmap.light_plus);
         }
     }
 
@@ -237,10 +237,10 @@ public class ProductDetailActivity extends AppCompatActivity {
             tv_product_price.setText(String.valueOf(total_price));
 
             iv_quantity_add.setClickable(true);
-            iv_quantity_add.setImageResource(R.mipmap.icon_add);
+            iv_quantity_add.setImageResource(R.mipmap.dark_plus);
         } else {
             iv_quantity_minus.setClickable(false);
-            iv_quantity_minus.setImageResource(R.mipmap.light_icon_minus);
+            iv_quantity_minus.setImageResource(R.mipmap.light_minus);
         }
     }
 

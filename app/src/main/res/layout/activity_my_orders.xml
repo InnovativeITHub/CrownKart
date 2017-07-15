@@ -2,12 +2,60 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="140dp">
+    android:layout_height="wrap_content">
+
+    <com.innovative.crownkart.views.CustomTextView
+        android:id="@+id/tv_order_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="@string/order_id"
+        android:textColor="@color/blue"
+        android:textSize="16sp"
+        app:font="@string/semibold_sans" />
+
+    <com.innovative.crownkart.views.CustomTextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="@string/date"
+        android:textColor="@color/blue"
+        android:textSize="16sp"
+        app:font="@string/semibold_sans" />
+
+    <com.innovative.crownkart.views.CustomTextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_order_number"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="@string/status"
+        android:textColor="@color/blue"
+        android:textSize="16sp"
+        app:font="@string/semibold_sans" />
 
     <RelativeLayout
         android:id="@+id/rl_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="140dp"
+        android:layout_below="@+id/tv_status"
         android:padding="8dp">
 
         <ImageView
@@ -96,21 +144,21 @@
             android:textSize="16sp"
             app:font="@string/semibold_sans" />
 
-        <com.innovative.crownkart.views.CustomTextView
-            android:id="@+id/tv_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/tv_quantity"
-            android:layout_marginBottom="4dp"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="@string/edit"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:font="@string/semibold_sans" />
+        <!--<com.innovative.crownkart.views.CustomTextView-->
+        <!--android:id="@+id/tv_track"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_below="@+id/tv_quantity"-->
+        <!--android:layout_marginBottom="4dp"-->
+        <!--android:gravity="center"-->
+        <!--android:maxLines="1"-->
+        <!--android:text="@string/track"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="16sp"-->
+        <!--app:font="@string/semibold_sans" />-->
 
         <View
             android:layout_width="match_parent"
@@ -119,7 +167,6 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@color/light_grey" />
-
 
     </RelativeLayout>
 

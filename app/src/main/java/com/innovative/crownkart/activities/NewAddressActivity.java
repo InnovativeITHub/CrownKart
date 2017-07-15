@@ -133,6 +133,10 @@ public class NewAddressActivity extends AppCompatActivity {
         editor.putString(SharedPrefernceValue.PHONE_NAME, phoneName);
         editor.putString(SharedPrefernceValue.COUNTRY_NAME, countryName);
         editor.commit();
+
+
+        //TODO: Hit the address save service here;
+
         finish();
     }
 
