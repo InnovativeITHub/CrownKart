@@ -86,4 +86,26 @@ public interface ApiService {
             , @Field("gender") String gender
             , @Field("emailAddress") String emailAddress);
 
+    @FormUrlEncoded
+    @POST("Address.php")
+    Call<Map> setAddress(@Field("email") String email
+            , @Field("first_name") String firstName
+            , @Field("last_name") String lastName
+            , @Field("add_line1") String addline1
+            , @Field("add_line2") String addline2
+            , @Field("landmark") String landmark
+            , @Field("city") String city
+            , @Field("state") String state
+            , @Field("country") String country
+            , @Field("pincode") String pincode
+            , @Field("alternate_mobile") String phone);
+
+    @FormUrlEncoded
+    @POST("deleteProduct.php")
+    Call<Map> deleteProduct(@Field("email") String email, @Field("pro_id") String pro_id);
+
+    @FormUrlEncoded
+    @POST("updateProduct.php")
+    Call<Map> updateProduct(@Field("email") String email, @Field("pro_id") String pro_id,
+                            @Field("size") String size, @Field("qty") String qty);
 }

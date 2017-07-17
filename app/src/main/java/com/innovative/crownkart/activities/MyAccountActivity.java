@@ -37,9 +37,7 @@ public class MyAccountActivity extends AppCompatActivity {
     @BindView(R.id.btn_save_info)
     CustomButton btn_save_info;
 
-
     RadioButton rb_gender;
-
     private SharedPreferences sharedPreferences;
     private String emailAddress, firstName, lastName, phone, gender;
 

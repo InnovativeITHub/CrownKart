@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.google.gson.internal.LinkedTreeMap;
 import com.innovative.crownkart.R;
@@ -73,6 +74,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     CustomTextView shopping_cart_count;
     @BindView(R.id.shopping_cart)
     CustomTextView shopping_cart;
+    @BindView(R.id.rel_blood)
+    RelativeLayout rel_blood;
 
     private String getIntentProId, emailAddress, category_name, product_description, price="0";
     private SharedPreferences sharedPreferences;
@@ -88,17 +91,24 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         setSupportActionBar(single_product_detail_toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-//        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         fontAwesomeFont = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
         shopping_cart.setTypeface(fontAwesomeFont);
 
         sharedPreferences = getSharedPreferences(SharedPrefernceValue.MyPREFERENCES, Context.MODE_PRIVATE);
-        isLoggedin = Boolean.parseBoolean(sharedPreferences.getString(SharedPrefernceValue.IS_LOGGED_IN, ""));
+        isLoggedin = Boolean.parseBoolean(sharedPreferences.getString(SharedPrefernceValue.IS_LOGGED_IN, "false"));
         emailAddress = sharedPreferences.getString(SharedPrefernceValue.EMAIL_ADDRESS, "");
         getIntentProId = getIntent().getExtras().getString("pro_id");
 
+        if(isLoggedin){
+            rel_blood.setVisibility(View.VISIBLE);
+            shopping_cart.setVisibility(View.VISIBLE);
+        }
+        else{
+            shopping_cart.setVisibility(View.GONE);
+            rel_blood.setVisibility(View.GONE);
+        }
         getSingleProductDetails();
     }
 
@@ -149,23 +159,47 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.buy_now)
     public void on_click_buy_Product() {
-        total_price = Integer.parseInt(tv_product_price.getText().toString());
-        App.getApiHelper().buyProducts(emailAddress, getIntentProId, tv_size.getText().toString(), String.valueOf(total_item), singleProductDTO.getPrice()+"", String.valueOf(total_price), new ApiCallback<Map>() {
-            @Override
-            public void onSuccess(Map map) {
 
-                Intent intent = new Intent(ProductDetailActivity.this, BuyOrderActivity.class);
-                intent.putExtra("pro_id",getIntentProId);
-                startActivity(intent);
+        if (isLoggedin) {
+            total_price = Integer.parseInt(tv_product_price.getText().toString());
+            App.getApiHelper().buyProducts(emailAddress, getIntentProId, tv_size.getText().toString(), String.valueOf(total_item), singleProductDTO.getPrice() + "", String.valueOf(total_price), new ApiCallback<Map>() {
+                @Override
+                public void onSuccess(Map map) {
 
-                System.out.println("Successfully done");
-            }
+                    Intent intent = new Intent(ProductDetailActivity.this, BuyOrderActivity.class);
+                    intent.putExtra("pro_id", getIntentProId);
+                    startActivity(intent);
 
-            @Override
-            public void onFailure(String message) {
+                    System.out.println("Successfully done");
+                }
 
-            }
-        });
+                @Override
+                public void onFailure(String message) {
+
+                }
+            });
+        } else {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Please login first")
+                .setTitle("CrownKart")
+                .setIcon(R.mipmap.splash_logo)
+                .setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(ProductDetailActivity.this,LoginActivity.class));
+                        dialog.dismiss();
+                        finish();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.show();
+    }
 
 
     }
@@ -244,38 +278,38 @@ public class ProductDetailActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.buy_now)
-    public void on_click_buy_now() {
-
-        if (isLoggedin) {
-            //TODO: Buy now
-
-        } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Please login first")
-                    .setTitle("CrownKart")
-                    .setIcon(R.mipmap.splash_logo)
-                    .setCancelable(false)
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-            builder.show();
-        }
-    }
+//    @OnClick(R.id.buy_now)
+//    public void on_click_buy_now() {
+//
+//        if (isLoggedin) {
+//            //TODO: Buy now
+//
+//        } else {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setMessage("Please login first")
+//                    .setTitle("CrownKart")
+//                    .setIcon(R.mipmap.splash_logo)
+//                    .setCancelable(false)
+//                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                        }
+//                    })
+//                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//                    });
+//            builder.show();
+//        }
+//    }
 
     @OnClick(R.id.add_to_cart)
     public void on_click_add_to_cart() {
         if (isLoggedin) {
-            App.getApiHelper().addToCart(emailAddress, getIntentProId, "XL", String.valueOf(total_item), String.valueOf(total_price), new ApiCallback<Map>() {
+            App.getApiHelper().addToCart(emailAddress, getIntentProId, tv_size.getText().toString(), String.valueOf(total_item), String.valueOf(total_price), new ApiCallback<Map>() {
                 @Override
                 public void onSuccess(Map map) {
                     String server_response = (((LinkedTreeMap) ((LinkedTreeMap) map.get("response")).get("result")).get("message")).toString();
@@ -303,7 +337,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
+                            startActivity(new Intent(ProductDetailActivity.this,LoginActivity.class));
+                            dialog.dismiss();
+                            finish();
                         }
                     })
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

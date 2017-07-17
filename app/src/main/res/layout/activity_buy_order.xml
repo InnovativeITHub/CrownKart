@@ -7,17 +7,9 @@
     android:layout_height="match_parent"
     tools:context="com.innovative.crownkart.activities.BuyOrderActivity">
 
-    <android.support.v7.widget.Toolbar
+    <include
         android:id="@+id/single_product_detail_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@color/blue"
-        android:gravity="center"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/MyDarkToolbarStyle"
-        app:titleTextColor="@color/white" />
+        layout="@layout/toolbar" />
 
     <com.innovative.crownkart.views.CustomTextView
         android:id="@+id/iv_one"
@@ -201,8 +193,9 @@
             android:id="@+id/sv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -320,5 +313,5 @@
 
             </RelativeLayout>
         </android.support.v4.widget.NestedScrollView>
-        </RelativeLayout>
+    </RelativeLayout>
 </RelativeLayout>

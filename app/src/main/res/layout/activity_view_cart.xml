@@ -14,19 +14,8 @@
         android:layout_centerInParent="true" />
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/view_cart_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@color/blue"
-        android:gravity="center"
-        android:minHeight="?attr/actionBarSize"
-        android:textDirection="firstStrong"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/MyDarkToolbarStyle"
-        app:titleTextColor="@color/white" />
-
+    <include layout="@layout/toolbar"
+        android:id="@+id/view_cart_toolbar"/>
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/sv"
@@ -125,7 +114,7 @@
                 android:drawableEnd="@mipmap/rupee"
                 android:drawableRight="@mipmap/rupee"
                 android:padding="10dp"
-                android:text="price"
+                android:text="0"
                 android:textColor="@color/green"
                 android:textStyle="bold"
                 app:font="@string/semibold_sans" />
@@ -169,7 +158,7 @@
                 android:drawableEnd="@mipmap/rupee"
                 android:drawableRight="@mipmap/rupee"
                 android:padding="10dp"
-                android:text="@string/price"
+                android:text="0"
                 android:textColor="@color/green"
                 android:textStyle="bold"
                 app:font="@string/semibold_sans" />

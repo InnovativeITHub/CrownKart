@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -14,9 +16,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.RelativeLayout;
 
 import com.innovative.crownkart.R;
 import com.innovative.crownkart.adapter.ExpandableAdapter;
+import com.innovative.crownkart.adapter.TabsPagerAdapter;
 import com.innovative.crownkart.config.App;
 import com.innovative.crownkart.dto.CategoryDTO;
 import com.innovative.crownkart.dto.SubcategoryDTO;
@@ -44,13 +48,24 @@ public class DashboardActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.homeTabLayout)
+    TabLayout homeTabLayout;
     @BindView(R.id.drawer_logout)
     CustomTextView drawer_logout;
     @BindView(R.id.drawer_faq_and_return_policy)
     CustomTextView drawer_faq_and_return_policy;
     @BindView(R.id.drawer_contact_us)
     CustomTextView drawer_contact_us;
+    @BindView(R.id.rel_blood)
+    RelativeLayout shopping_cart_count;
+    @BindView(R.id.shopping_cart)
+    CustomTextView shopping_cart;
+//    @BindView(R.id.pager)
+//    ViewPager viewPager;
 
+    private SharedPreferences sharedPreferences;
+    boolean isLoggedin;
+    String emailAddress;
 
     List<CategoryDTO> categoryDTOList = new ArrayList<>();
     List<SubcategoryDTO> subcategoryDTOList;
@@ -59,7 +74,7 @@ public class DashboardActivity extends AppCompatActivity {
     private ExpandableAdapter expandableAdapter;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private String toolbarTitle;
-
+    private Typeface fontAwesomeFont;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +87,8 @@ public class DashboardActivity extends AppCompatActivity {
         toolbarTitle = categoryDTOList.get(0).getMainCategoryName() + " - " + map.get(categoryDTOList.get(0).getMainCategoryName()).get(0).getSubCategoryName();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        fontAwesomeFont = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
+        shopping_cart.setTypeface(fontAwesomeFont);
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
@@ -94,7 +111,45 @@ public class DashboardActivity extends AppCompatActivity {
         }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+        sharedPreferences = getSharedPreferences(SharedPrefernceValue.MyPREFERENCES, Context.MODE_PRIVATE);
+        isLoggedin = Boolean.parseBoolean(sharedPreferences.getString(SharedPrefernceValue.IS_LOGGED_IN, ""));
+        emailAddress = sharedPreferences.getString(SharedPrefernceValue.EMAIL_ADDRESS, "");
+        if(isLoggedin){
+            shopping_cart_count.setVisibility(View.VISIBLE);
+            shopping_cart.setVisibility(View.VISIBLE);
+        }
+        else{
+            shopping_cart.setVisibility(View.GONE);
+            shopping_cart_count.setVisibility(View.GONE);
+        }
 
+       /* homeTabLayout.addTab(homeTabLayout.newTab().setIcon(R.mipmap.ic_home));
+        homeTabLayout.addTab(homeTabLayout.newTab().setIcon(R.mipmap.ic_profile));
+        homeTabLayout.addTab(homeTabLayout.newTab().setIcon(R.mipmap.ic_cart));
+        homeTabLayout.addTab(homeTabLayout.newTab().setIcon(R.mipmap.ic_myorder));
+
+        final TabsPagerAdapter adapter = new TabsPagerAdapter
+                (getSupportFragmentManager(), homeTabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+
+        homeTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+*/
         elvCategory.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
             @Override
@@ -194,6 +249,13 @@ public class DashboardActivity extends AppCompatActivity {
         drawerLayout.closeDrawers();
     }
 
+    @OnClick(R.id.shopping_cart)
+    public void on_click_shopping_cart() {
+
+        Intent intent = new Intent(DashboardActivity.this, ViewCartActivity.class);
+        intent.putExtra("emailAddress", emailAddress);
+        startActivity(intent);
+    }
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        getMenuInflater().inflate(R.menu.main_menu, menu);

@@ -12,12 +12,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.innovative.crownkart.R;
+import com.innovative.crownkart.api.ApiCallback;
+import com.innovative.crownkart.config.App;
 import com.innovative.crownkart.sharePreference.SharedPrefernceValue;
 import com.innovative.crownkart.views.CustomButton;
 import com.innovative.crownkart.views.CustomEditText;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +54,7 @@ public class NewAddressActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private List<String> list;
     private String firstName, lastName, addressName, landmarkName, pincodeName,
-            cityName, stateName, countryName, phoneName, saveContinue;
+            cityName, stateName, countryName, phoneName, saveContinue,emailAddress;
     private SharedPreferences sharedPreferences;
     private Intent getIntentData;
 
@@ -62,6 +65,7 @@ public class NewAddressActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         sharedPreferences = getSharedPreferences(SharedPrefernceValue.MyPREFERENCES, Context.MODE_PRIVATE);
+        emailAddress=sharedPreferences.getString(SharedPrefernceValue.EMAIL_ADDRESS,null);
         getEditData();
 
         list = new ArrayList<String>();
@@ -123,6 +127,20 @@ public class NewAddressActivity extends AppCompatActivity {
         stateName = et_state_name.getText().toString();
         phoneName = et_phone_name.getText().toString();
         countryName=spinner_country_name.getSelectedItem().toString();
+
+        App.getApiHelper().setAddress(emailAddress, firstName, lastName, addressName, addressName, landmarkName, cityName, stateName, countryName, pincodeName, phoneName, new ApiCallback<Map>() {
+            @Override
+            public void onSuccess(Map map) {
+                System.out.println("map" + map);
+                finish();
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+
         editor.putString(SharedPrefernceValue.FIRST_NAME, firstName);
         editor.putString(SharedPrefernceValue.LAST_NAME, lastName);
         editor.putString(SharedPrefernceValue.ADDRESS_NAME, addressName);

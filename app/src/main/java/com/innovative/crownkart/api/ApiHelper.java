@@ -194,6 +194,53 @@ public class ApiHelper {
         });
     }
 
+    public void setAddress(String email, String firstname, String lastname, String add_line1,
+                           String add_line2, String landmark, String city, String state,
+                           String country, String pincode, String phone,final ApiCallback<Map> apiCallback){
+        apiService.setAddress(email,firstname,lastname,add_line1,
+                add_line2,landmark,city,state,country,pincode,phone).enqueue(new Callback<Map>() {
+            @Override
+            public void onResponse(Call<Map> call, Response<Map> response) {
+                apiCallback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Map> call, Throwable t) {
+                apiCallback.onFailure("unable to parse data from server");
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void deleteProduct(String email, String pro_id, final  ApiCallback<Map> apiCallback){
+        apiService.deleteProduct(email,pro_id).enqueue(new Callback<Map>() {
+            @Override
+            public void onResponse(Call<Map> call, Response<Map> response) {
+                apiCallback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Map> call, Throwable t) {
+                apiCallback.onFailure("unable to parse data from server");
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public  void updateProduct(String email, String pro_id, String size, String qty, final ApiCallback<Map> apiCallback){
+        apiService.updateProduct(email,pro_id,size,qty).enqueue(new Callback<Map>() {
+            @Override
+            public void onResponse(Call<Map> call, Response<Map> response) {
+                apiCallback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Map> call, Throwable t) {
+                apiCallback.onFailure("unable to parse data from server");
+                t.printStackTrace();
+            }
+        });
+    }
     public void applyCoupon(String email, String couponCode, final ApiCallback<Map> apiCallback) {
         apiService.applyCoupon(email, couponCode).enqueue(new Callback<Map>() {
             @Override

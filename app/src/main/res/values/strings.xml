@@ -115,6 +115,23 @@
     Login Activity String
     ================================================================================================
     -->
+    <string-array name="sizes">
+        <item>XS</item>
+        <item>S</item>
+        <item>M</item>
+        <item>L</item>
+        <item>XL</item>
+        <item>2XL</item>
+        <item>3XL</item>
+    </string-array>
+    <string-array name="quantity">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
 
     <string name="fa_shopping_cart">&#xf07a;</string>
 
