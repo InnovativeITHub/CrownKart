@@ -28,19 +28,17 @@
         <!--</android.support.v7.widget.Toolbar>-->
         <include layout="@layout/toolbar" />
         <!--<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"-->
-            <!--xmlns:tools="http://schemas.android.com/tools"-->
-            <!--android:id="@+id/pager"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-            <!--android:layout_weight="0.4" >-->
+        <!--xmlns:tools="http://schemas.android.com/tools"-->
+        <!--android:id="@+id/pager"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+        <!--android:layout_weight="0.4" >-->
 
         <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-        </FrameLayout>
+            android:layout_height="match_parent"></FrameLayout>
         <!--</android.support.v4.view.ViewPager>-->
         <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->
@@ -49,7 +47,7 @@
         <!--android:orientation="horizontal"-->
         <!--android:layout_weight="1.6">-->
 
-        <android.support.design.widget.TabLayout
+        <!--<android.support.design.widget.TabLayout
             android:id="@+id/homeTabLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -57,124 +55,136 @@
             android:minHeight="?attr/actionBarSize"
             app:tabGravity="fill">
 
-        </android.support.design.widget.TabLayout>
+        </android.support.design.widget.TabLayout>-->
         <!--</LinearLayout>-->
 
     </LinearLayout>
 
-    <RelativeLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start">
 
-        <include layout="@layout/header_profile" />
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/header"
-            android:background="@color/white">
+            android:layout_height="match_parent">
 
-            <com.innovative.crownkart.views.CustomTextView
-                android:id="@+id/home"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:padding="12dp"
-                android:text="Home"
-                android:textColor="@color/blue"
-                android:textSize="16sp"
-                app:font="@string/regular_sans" />
+            <include layout="@layout/header_profile" />
 
-            <View
-                android:id="@+id/empty_view"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/home"
-                android:background="@color/grey" />
-
-            <ExpandableListView
-                android:id="@+id/elv_category"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/drawer_track_order"
-                android:layout_below="@+id/empty_view" />
+                android:layout_below="@+id/header"
+                android:background="@color/white">
 
-            <com.innovative.crownkart.views.CustomTextView
-                android:id="@+id/drawer_track_order"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_above="@+id/empty_line_view_two"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:padding="12dp"
-                android:text="Track Order"
-                android:textColor="@color/blue"
-                android:textSize="16sp"
-                app:font="@string/regular_sans" />
+                <com.innovative.crownkart.views.CustomTextView
+                    android:id="@+id/home"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:text="Home"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp"
+                    app:font="@string/regular_sans" />
 
-            <View
-                android:id="@+id/empty_line_view_two"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_above="@+id/drawer_faq_and_return_policy"
-                android:background="@color/light_grey" />
+                <View
+                    android:id="@+id/empty_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/home"
+                    android:background="@color/grey" />
 
-            <com.innovative.crownkart.views.CustomTextView
-                android:id="@+id/drawer_faq_and_return_policy"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_above="@+id/empty_line_view_three"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:padding="12dp"
-                android:text="FAQ and Return Policy"
-                android:textColor="@color/blue"
-                android:textSize="16sp"
-                app:font="@string/regular_sans" />
+                <ExpandableListView
+                    android:id="@+id/elv_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    android:layout_below="@+id/empty_view" />
 
-            <View
-                android:id="@+id/empty_line_view_three"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_above="@+id/drawer_contact_us"
-                android:background="@color/light_grey" />
+                <View
+                    android:id="@+id/empty_line_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/elv_category"
+                    android:background="@color/grey" />
 
-            <com.innovative.crownkart.views.CustomTextView
-                android:id="@+id/drawer_contact_us"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_above="@+id/empty_line_view_four"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:padding="12dp"
-                android:text="Contact Us"
-                android:textColor="@color/blue"
-                android:textSize="16sp"
-                app:font="@string/regular_sans" />
+                <com.innovative.crownkart.views.CustomTextView
+                    android:id="@+id/drawer_track_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/empty_line_view"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:text="Track Order"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp"
+                    app:font="@string/regular_sans" />
 
-            <View
-                android:id="@+id/empty_line_view_four"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_above="@+id/drawer_logout"
-                android:background="@color/light_grey" />
+                <View
+                    android:id="@+id/empty_line_view_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/drawer_track_order"
+                    android:background="@color/light_grey" />
 
-            <com.innovative.crownkart.views.CustomTextView
-                android:id="@+id/drawer_logout"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:padding="12dp"
-                android:text="Logout"
-                android:textColor="@color/blue"
-                android:textSize="16sp"
-                app:font="@string/regular_sans" />
+                <com.innovative.crownkart.views.CustomTextView
+                    android:id="@+id/drawer_faq_and_return_policy"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/empty_line_view_two"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:text="FAQ and Return Policy"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp"
+                    app:font="@string/regular_sans" />
+
+                <View
+                    android:id="@+id/empty_line_view_three"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/drawer_faq_and_return_policy"
+                    android:background="@color/light_grey" />
+
+                <com.innovative.crownkart.views.CustomTextView
+                    android:id="@+id/drawer_contact_us"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/empty_line_view_three"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:text="Contact Us"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp"
+                    app:font="@string/regular_sans" />
+
+                <View
+                    android:id="@+id/empty_line_view_four"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/drawer_contact_us"
+                    android:background="@color/light_grey" />
+
+                <com.innovative.crownkart.views.CustomTextView
+                    android:id="@+id/drawer_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/empty_line_view_four"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:text="Logout"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp"
+                    app:font="@string/regular_sans" />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 
-    </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
 </android.support.v4.widget.DrawerLayout>

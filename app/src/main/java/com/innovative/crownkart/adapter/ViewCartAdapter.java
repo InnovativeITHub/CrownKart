@@ -31,6 +31,7 @@ import com.innovative.crownkart.views.CustomTextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -45,11 +46,21 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class ViewCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<CartDTO> viewCartList;
+    private List<CartDTO> viewCartList;
     private Context context;
     SharedPreferences sharedPreferences;
     String emailAddress;
     String sizeset, qtyset;
+    onClickButtonListener onClickButtonListener;
+
+    public interface onClickButtonListener {
+        public void onClickButton(int position);
+    }
+
+    public ViewCartAdapter(List<CartDTO> viewCartList, ViewCartAdapter.onClickButtonListener onClickButtonListener) {
+        this.viewCartList = viewCartList;
+        this.onClickButtonListener = onClickButtonListener;
+    }
 
     public ViewCartAdapter(Context context, ArrayList<CartDTO> viewCartList) {
         this.context = context;
@@ -80,13 +91,13 @@ public class ViewCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             holder.tv_quantity.setText(cartDTO.getQuantity());
             holder.tv_size.setText(cartDTO.getSize());
             Picasso.with(context).load(full_url).into(holder.ivProductImage);
-            holder.tv_edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog dialog = holder.showAlertBox(context, pro_id);
-                    dialog.show();
-                }
-            });
+//            holder.tv_edit.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    AlertDialog dialog = holder.showAlertBox(context, pro_id);
+//                    dialog.show();
+//                }
+//            });
             holder.iv_cancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -94,12 +105,12 @@ public class ViewCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         @Override
                         public void onSuccess(Map map) {
                             String message = ((LinkedTreeMap) ((LinkedTreeMap) map.get("response")).get("result")).get("message").toString();
-                            Toast.makeText(App.getAppContext(),message,Toast.LENGTH_LONG).show();
+                            Toast.makeText(App.getAppContext(), message, Toast.LENGTH_LONG).show();
                         }
 
                         @Override
                         public void onFailure(String message) {
-                            Toast.makeText(App.getAppContext(),message,Toast.LENGTH_LONG).show();
+                            Toast.makeText(App.getAppContext(), message, Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -112,7 +123,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return viewCartList.size();
     }
 
-    class ViewCartHolder extends RecyclerView.ViewHolder {
+    class ViewCartHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         @BindView(R.id.iv_product_image)
         ImageView ivProductImage;
@@ -136,66 +147,13 @@ public class ViewCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public ViewCartHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            tv_edit.setOnClickListener(this);
         }
 
-        AlertDialog showAlertBox(final Context context, final String pro_id) {
-            AlertDialog.Builder builder;
-            Context mContext = context;
-            this.pro_id = pro_id;
-            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.dialog_layout, (ViewGroup) relativeLayout.findViewById(R.id.layout_root));
-            Button btn_save_continue = (Button) layout.findViewById(R.id.btn_save_continue);
-            Spinner size = (Spinner) layout.findViewById(R.id.size);
-            Spinner qty = (Spinner) layout.findViewById(R.id.quantity);
-            size.setAdapter(ArrayAdapter.createFromResource(context, R.array.sizes, R.layout.dialog));
-            qty.setAdapter(ArrayAdapter.createFromResource(context, R.array.quantity, R.layout.dialog));
-            size.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    sizeset = parent.getItemAtPosition(position).toString();
-                    tv_size.setText(sizeset);
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-
-            qty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    qtyset = parent.getSelectedItem().toString();
-                    tv_quantity.setText(qtyset);
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-
-            btn_save_continue.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    App.getApiHelper().updateProduct(emailAddress, pro_id, sizeset, qtyset, new ApiCallback<Map>() {
-                        @Override
-                        public void onSuccess(Map map) {
-                            String message = ((LinkedTreeMap) ((LinkedTreeMap) map.get("response")).get("result")).get("message").toString();
-                            Toast.makeText(App.getAppContext(),message,Toast.LENGTH_LONG).show();
-                        }
-
-                        @Override
-                        public void onFailure(String message) {
-                            Toast.makeText(App.getAppContext(),message,Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-            });
-            builder = new AlertDialog.Builder(mContext);
-            builder.setView(layout);
-            AlertDialog dialog = builder.create();
-            return dialog;
+        @Override
+        public void onClick(View view) {
+            onClickButtonListener.onClickButton(getLayoutPosition());
         }
     }
 }

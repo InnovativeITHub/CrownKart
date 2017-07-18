@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.internal.LinkedTreeMap;
 import com.innovative.crownkart.R;
@@ -71,8 +72,9 @@ public class ViewCartActivity extends AppCompatActivity {
     private String emailAddress;
     private SharedPreferences sharedPreferences;
     private ViewCartAdapter viewCartAdapter;
-
+    ArrayList<CartDTO> viewCartList;
     private Typeface fontAwesomeFont;
+    ViewCartAdapter adapter;
 
     TextView sizes,qtys;
     String sizeset,qtyset;
@@ -120,7 +122,7 @@ public class ViewCartActivity extends AppCompatActivity {
             public void onSuccess(final Map map) {
 
                 System.out.println("map" + map);
-                ArrayList<CartDTO> viewCartList = new ArrayList<CartDTO>();
+                viewCartList = new ArrayList<CartDTO>();
 
                // viewCartList = ((ArrayList) ((LinkedTreeMap) map.get("response")).get("result"));
 
@@ -159,12 +161,20 @@ public class ViewCartActivity extends AppCompatActivity {
                     tvCashback.setText(coupon);
                     tv_price_three.setText(total_charge);
                     Log.v("viewCart", viewCartList.toString());
+
                     viewCartAdapter = new ViewCartAdapter(getApplicationContext(), viewCartList);
-                    rv_view_cart_items.setAdapter(viewCartAdapter);
+                    adapter = new ViewCartAdapter(viewCartList, new ViewCartAdapter.onClickButtonListener() {
+                        @Override
+                        public void onClickButton(int position) {
+                            Toast.makeText(getApplication(), "LAds", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    rv_view_cart_items.setAdapter(adapter);
                 }
                 else{
                     viewCartAdapter = new ViewCartAdapter(getApplicationContext(), viewCartList);
-                    rv_view_cart_items.setAdapter(viewCartAdapter);
+                    rv_view_cart_items.setAdapter(adapter);
                 }
             }
 

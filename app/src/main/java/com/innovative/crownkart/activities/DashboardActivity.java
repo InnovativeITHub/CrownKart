@@ -48,8 +48,8 @@ public class DashboardActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.homeTabLayout)
-    TabLayout homeTabLayout;
+    /*@BindView(R.id.homeTabLayout)
+    TabLayout homeTabLayout;*/
     @BindView(R.id.drawer_logout)
     CustomTextView drawer_logout;
     @BindView(R.id.drawer_faq_and_return_policy)

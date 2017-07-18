@@ -77,10 +77,9 @@ public class ProductDetailActivity extends AppCompatActivity {
     @BindView(R.id.rel_blood)
     RelativeLayout rel_blood;
 
-    private String getIntentProId, emailAddress, category_name, product_description, price="0";
+    private String getIntentProId, emailAddress, category_name, product_description, price = "0";
     private SharedPreferences sharedPreferences;
     boolean isLoggedin;
-    int count = 0,sizecount = 1, total_item = 1, total_price;
     private Typeface fontAwesomeFont;
 
     @Override
@@ -101,11 +100,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         emailAddress = sharedPreferences.getString(SharedPrefernceValue.EMAIL_ADDRESS, "");
         getIntentProId = getIntent().getExtras().getString("pro_id");
 
-        if(isLoggedin){
+        if (isLoggedin) {
             rel_blood.setVisibility(View.VISIBLE);
             shopping_cart.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             shopping_cart.setVisibility(View.GONE);
             rel_blood.setVisibility(View.GONE);
         }
@@ -156,6 +154,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
     }
+    int count = 1, sizecount = 1, total_item = 1, total_price;
 
     @OnClick(R.id.buy_now)
     public void on_click_buy_Product() {
@@ -179,36 +178,34 @@ public class ProductDetailActivity extends AppCompatActivity {
                 }
             });
         } else {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Please login first")
-                .setTitle("CrownKart")
-                .setIcon(R.mipmap.splash_logo)
-                .setCancelable(false)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(ProductDetailActivity.this,LoginActivity.class));
-                        dialog.dismiss();
-                        finish();
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        builder.show();
-    }
-
-
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Please login first")
+                    .setTitle("CrownKart")
+                    .setIcon(R.mipmap.splash_logo)
+                    .setCancelable(false)
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(new Intent(ProductDetailActivity.this, LoginActivity.class));
+                            dialog.dismiss();
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            builder.show();
+        }
     }
 
     int max_size = 0;
 
     @OnClick(R.id.iv_add)
     public void on_click_size_add() {
-        if (max_size < singleProductDTO.getSizeInfoDTOList().size()-1) {
+        if (max_size < singleProductDTO.getSizeInfoDTOList().size() - 1) {
             max_size = sizecount++;
             String size = singleProductDTO.getSizeInfoDTOList().get(max_size).getSize();
             tv_size.setText(size);
@@ -243,7 +240,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     @OnClick(R.id.iv_quantity_add)
     public void on_click_quantity_add() {
         int qty = Integer.parseInt(singleProductDTO.getSizeInfoDTOList().get(max_size).getQuantity());
-        price=String.valueOf(singleProductDTO.getPrice());
+        price = String.valueOf(singleProductDTO.getPrice());
         if (total_item < qty) {
             total_item = count++;
             total_price = Integer.parseInt(price) * total_item;
@@ -261,9 +258,10 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.iv_quantity_minus)
     public void on_click_quantity_minus() {
-        price=String.valueOf(singleProductDTO.getPrice());
+        int qty = Integer.parseInt(singleProductDTO.getSizeInfoDTOList().get(max_size).getQuantity());
+        price = String.valueOf(singleProductDTO.getPrice());
 
-        if (total_item > 0) {
+        if (total_item > qty) {
             total_item = count--;
             total_price = Integer.parseInt(price) * total_item;
 
@@ -337,7 +335,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(ProductDetailActivity.this,LoginActivity.class));
+                            startActivity(new Intent(ProductDetailActivity.this, LoginActivity.class));
                             dialog.dismiss();
                             finish();
                         }
